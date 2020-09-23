@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter, Link, useHistory } from 'react-router-dom';
+
 
 class Mypage extends React.Component {
     constructor(props) {
@@ -70,9 +72,17 @@ class Mypage extends React.Component {
                         <button>비밀번호 변경</button>
                     </form>
                 </div>
+                <div className='edit-logout'>
+                    <button onClick={() => {
+                        return axios
+                            .post("http://18.216.148.52:5000/signedit")
+                            .then(() => this.props.history.push("/"))
+                            .catch(e => console.log(e))
+                    }}>로그아웃</button>
+                </div>
             </div>
         </div>
     }
 }
 
-export default Mypage
+export default withRouter(Mypage)

@@ -1,26 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Switch, useHistory, Redirect } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+import Main from "./pages/Main";
+import axios from "axios"
+
+class App extends React.Component {
+  state = {
+    isSignin: false,
+    userinfo: {},
+    todo: {}
+  };
+
+  handleisSigninChange() {
+    this.setState({ isSignin: true });
+    axios.all([axios.get("http://localhost:4000/user"), axios.get("http://localhost:4000/todo")])
+      .then(axios.spread((userData, todoData) => {
+        this.setState({ userinfo: userData.data });
+        this.setState({ todo: todoData.data })
+      }))
+  }
+
+  render() {
+    const { isSignin, userinfo } = this.state;
+    console.log(isSignin, userinfo);
+    return (
+      <div>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              path="/signin"
+              render={() => (
+                <Signin
+                  isSignin={isSignin}
+                  handleisSigninChange={this.handleisSigninChange.bind(this)}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() => <Signup isSignin={isSignin} />}
+            />
+            <Route
+              exact
+              path="/main"
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} />}
+            />
+            <Route
+              path="/"
+              render={() => {
+                if (isSignin) {
+                  return <Redirect to="/main" />;
+                }
+                return <Redirect to="/signin" />;
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
-
 export default App;

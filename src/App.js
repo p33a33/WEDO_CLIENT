@@ -16,7 +16,7 @@ class App extends React.Component {
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
-    axios.all([axios.get("http://localhost:4000/user"), axios.get("http://localhost:4000/todo")])
+    axios.all([axios.get("http://18.216.148.52:5000/signin"), axios.get("http://18.216.148.52:5000/main")])
       .then(axios.spread((userData, todoData) => {
         this.setState({ userinfo: userData.data });
         this.setState({ todo: todoData.data })

@@ -1,15 +1,22 @@
 import React from 'react';
-
-export default function Main(props) {
+import { withRouter, Link, useHistory } from 'react-router-dom';
+function Main(props) {
     return (
-        <div> todo가 표시되는 공간입니다.
-            {props.todos.map(todo => (
-                <>
-                    <div>제목 : {todo.title}</div>
-                    <div>내용 : {todo.body}</div>
-                </>
-            )
-            )}
+        <div>
+            <Link to="/mypage"><h3>Mypage</h3></Link>
+            <div className="layout">
+                <h2>Todo List</h2>
+                {props.todos.map((todo, index) => {
+                    return <div className="todo-entry">
+                        <div><h3>{index + 1}. {todo.title}</h3></div>
+                        <div><b1>{todo.body}</b1></div>
+                    </div>
+                }
+                )}
+            </div>
+
         </div>
     )
 }
+
+export default withRouter(Main)

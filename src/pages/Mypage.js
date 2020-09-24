@@ -69,16 +69,11 @@ class Mypage extends React.Component {
                         <div>
                             <input type="new-password-check" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input>
                         </div>
-                        <button>비밀번호 변경</button>
+                        <button type="submit">비밀번호 변경</button>
                     </form>
                 </div>
                 <div className='edit-logout'>
-                    <button onClick={() => {
-                        return axios
-                            .post("http://18.216.148.52:5000/signout")
-                            .then(() => this.props.history.push("/"))
-                            .catch(e => console.log(e))
-                    }}>로그아웃</button>
+                    <button onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
                 </div>
             </div>
         </div>

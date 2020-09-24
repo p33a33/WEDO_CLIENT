@@ -17,6 +17,25 @@ export default class Signup extends React.Component {
         this.valueChange = this.valueChange.bind(this)
     }
 
+    passwordValidationCheck = (pw) => {
+        let num = pw.search(/[0-9]/g);  // 주어진 pw에 0~9사이에 숫자가 있으면 0, 없으면 -1
+        let eng = pw.search(/[a-z]/ig); // 주어진 pw에 a~z사이에 문자가 있으면 0, 없으면 -1
+        let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); // 주어진 pw에 대괄호 안의 특수문자가 있으면 0, 없으면 -1
+
+        if (pw.length < 8 || pw.length > 20) {
+            alert("비밀번호는 8~20자 이내입니다.")
+            return false;
+        } else if (pw.search(/\s/) !== -1) {
+            alert("비밀번호에는 공백을 포함할 수 없습니다.")
+            return false;
+        } else if (num < 0 || eng < 0 || spe < 0) {
+            alert("비밀번호에는 숫자, 영문, 특수문자가 포함되어야 합니다")
+            return false;
+        } else {
+            return true
+        }
+    }
+
     valueChange = (key) => (e) => {
         this.setState({
             [key]: e.target.value
@@ -25,18 +44,21 @@ export default class Signup extends React.Component {
 
     submitHandler() {
         let { email, password, fullname, nickname } = this.state;
-        if (this.state.password === this.state.passwordCheck) {
-            axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
-                .then(res => {
-                    console.log(res)
-                    if (res.status === 200) {
-                        this.setState({
-                            hasSignedup: true
-                        })
-                    }
-                })
-        } else {
-            return alert("비밀번호가 일치하지 않습니다")
+
+        if (this.passwordValidationCheck(password)) {
+            if (this.state.password === this.state.passwordCheck) {
+                axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
+                    .then(res => {
+                        console.log(res)
+                        if (res.status === 200) {
+                            this.setState({
+                                hasSignedup: true
+                            })
+                        }
+                    })
+            } else {
+                return alert("비밀번호가 일치하지 않습니다")
+            }
         }
     }
 

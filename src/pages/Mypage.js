@@ -69,7 +69,7 @@ class Mypage extends React.Component {
                         <div>
                             <input type="new-password-check" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input>
                         </div>
-                        <button>비밀번호 변경</button>
+                        <button type="submit">비밀번호 변경</button>
                     </form>
                 </div>
                 <div className='edit-logout'>

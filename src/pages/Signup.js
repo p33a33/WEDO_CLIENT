@@ -14,35 +14,12 @@ export default class Signup extends React.Component {
             hasSignedup: false
         }
         this.submitHandler = this.submitHandler.bind(this)
+        this.valueChange = this.valueChange.bind(this)
     }
 
-    emailChange(e) {
+    valueChange = (key) => (e) => {
         this.setState({
-            email: e.target.value
-        })
-    }
-
-    passwordChange(e) {
-        this.setState({
-            password: e.target.value
-        })
-    }
-
-    passwordCheckChange(e) {
-        this.setState({
-            passwordCheck: e.target.value
-        })
-    }
-
-    fullnameChange(e) {
-        this.setState({
-            fullname: e.target.value
-        })
-    }
-
-    nicknameChange(e) {
-        this.setState({
-            nickname: e.target.value
+            [key]: e.target.value
         })
     }
 
@@ -69,13 +46,15 @@ export default class Signup extends React.Component {
         } else {
             return (
                 <div>
-                    <div>로그인</div>
-                    <div><label> 이메일 <input onChange={this.emailChange.bind(this)} type="text" placeholder="이메일을 입력해주세요" /> </label></div>
-                    <div><label> 비밀번호 <input onChange={this.passwordChange.bind(this)} type="password" placeholder="비밀번호를 입력해주세요" /> </label></div>
-                    <div><label> 비밀번호 확인 <input onChange={this.passwordCheckChange.bind(this)} type="password" placeholder="비밀번호를 한 번 더 입력해주세요" /> </label></div>
-                    <div><label> 이름 <input onChange={this.fullnameChange.bind(this)} type="text" placeholder="이름을 입력해주세요" /> </label></div>
-                    <div><label> 닉네임 <input onChange={this.nicknameChange.bind(this)} type="text" placeholder="별명을 입력해주세요" /> </label></div>
-                    <div><button onClick={this.submitHandler}> 회원가입 </button></div>
+                    <form onSubmit={(e) => { e.preventDefault(); this.submitHandler(); }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
+                        <div>로그인</div>
+                        <div><label> 이메일 <input onChange={this.valueChange("email")} type="email" placeholder="이메일을 입력해주세요" /> </label></div> {/* HTML5 내장 이메일 유효성 검사를 진행하도록 수정했습니다 9/24 */}
+                        <div><label> 비밀번호 <input onChange={this.valueChange("password")} type="password" placeholder="비밀번호를 입력해주세요" /> </label></div>
+                        <div><label> 비밀번호 확인 <input onChange={this.valueChange("passwordCheck")} type="password" placeholder="비밀번호를 한 번 더 입력해주세요" /> </label></div>
+                        <div><label> 이름 <input onChange={this.valueChange("fullname")} type="text" placeholder="이름을 입력해주세요" /> </label></div>
+                        <div><label> 닉네임 <input onChange={this.valueChange("nickname")} type="text" placeholder="별명을 입력해주세요" /> </label></div>
+                        <div><button type="submit"> 회원가입 </button></div>
+                    </form>
                 </div >
             )
         }

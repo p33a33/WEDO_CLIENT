@@ -42,12 +42,14 @@ export default class Signin extends React.Component {
             return <Redirect to="/" />
         } else {
             return (
-                <div>
-                    <div>로그인</div>
-                    <div><label> 이메일 <input onChange={this.emailChange.bind(this)} type="text" placeholder="이메일을 입력해주세요" /> </label></div>
-                    <div><label> 비밀번호 <input onChange={this.passwordChange.bind(this)} type="password" placeholder="비밀번호를 입력해주세요" /> </label></div>
-                    <div><button onClick={this.submitHandler}> 로그인 </button></div>
-                </div >
+                <form onSubmit={(e) => { e.preventDefault(); this.submitHandler() }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
+                    <div>
+                        <div>로그인</div>
+                        <div><label> 이메일 <input onChange={this.emailChange.bind(this)} type="email" placeholder="이메일을 입력해주세요" /> </label></div> {/* HTML5 내장 이메일 유효성 검사를 진행하도록 수정했습니다 9/24 */}
+                        <div><label> 비밀번호 <input onChange={this.passwordChange.bind(this)} type="password" placeholder="비밀번호를 입력해주세요" /> </label></div>
+                        <div><button type="submit"> 로그인 </button></div>
+                    </div >
+                </form>
             )
         }
     }

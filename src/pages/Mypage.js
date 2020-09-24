@@ -73,12 +73,7 @@ class Mypage extends React.Component {
                     </form>
                 </div>
                 <div className='edit-logout'>
-                    <button onClick={() => {
-                        return axios
-                            .post("http://18.216.148.52:5000/signout")
-                            .then(() => this.props.history.push("/"))
-                            .catch(e => console.log(e))
-                    }}>로그아웃</button>
+                    <button onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
                 </div>
             </div>
         </div>

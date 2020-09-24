@@ -9,19 +9,30 @@ import Mypage from "./pages/Mypage"
 import axios from "axios"
 
 class App extends React.Component {
-  state = {
-    isSignin: false,
-    userinfo: {},
-    todos: [{ title: "운동", body: "요가 30분, 강아지랑 산책 1시간하기" }, { title: "블로깅", body: "리액트 개념정리, 회고록 작성" }, { title: "영양제 챙겨먹기", body: "비타민제 2알, 유산균 아침에 한알씩" }]
-  };
+  constructor() {
+    super()
+    this.state = {
+      isSignin: false,
+      userinfo: {},
+      todos: [{ title: "운동", body: "요가 30분, 강아지랑 산책 1시간하기" }, { title: "블로깅", body: "리액트 개념정리, 회고록 작성" }, { title: "영양제 챙겨먹기", body: "비타민제 2알, 유산균 아침에 한알씩" }]
+    };
+    this.handleisSigninChange = this.handleisSigninChange.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
+  }
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
     axios.all([axios.get("http://18.216.148.52:5000/signin"), axios.get("http://18.216.148.52:5000/main")])
       .then(axios.spread((userData, todoData) => {
-        this.setState({ userinfo: userData.data });
-        this.setState({ todos: todoData.data })
+        this.setState({ userinfo: userData.data, todos: todoData });
       }))
+  }
+
+  handleSignout() {
+    this.setState({ isSignin: false, userinfo: {}, todos: [] });
+    axios
+      .post("http://18.216.148.52:5000/signout")
+      .catch(e => console.log(e))
   }
 
   render() {
@@ -36,7 +47,7 @@ class App extends React.Component {
               render={() => (
                 <Signin
                   isSignin={isSignin}
-                  handleisSigninChange={this.handleisSigninChange.bind(this)}
+                  handleisSigninChange={this.handleisSigninChange}
                 />
               )}
             />
@@ -48,7 +59,7 @@ class App extends React.Component {
             <Route
               exact
               path="/mypage"
-              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} />}
+              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} history={useHistory} />}
             />
             <Route
               exact

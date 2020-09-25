@@ -20,10 +20,9 @@ export default class Signup extends React.Component {
     }
 
     passwordValidationCheck = (pw) => {
-        let num = pw.search(/[0-9]/g);  // 주어진 pw에 0~9사이에 숫자
-        let eng = pw.search(/[a-z]/ig); // 주어진 pw에 a~z사이에 문자
-        let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); // 주어진 pw에 대괄호 안의 특수문자
-        // 있으면 0, 없으면 -1
+        let num = pw.search(/[0-9]/g);  // 주어진 pw에 0~9사이에 숫자가 있으면 0, 없으면 -1
+        let eng = pw.search(/[a-z]/ig); // 주어진 pw에 a~z사이에 문자가 있으면 0, 없으면 -1
+        let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); // 주어진 pw에 대괄호 안의 특수문자가 있으면 0, 없으면 -1
 
         if (pw.length < 8 || pw.length > 20) {
             alert("비밀번호는 8~20자 이내입니다.")
@@ -47,6 +46,7 @@ export default class Signup extends React.Component {
 
     submitHandler() {
         let { email, password, fullname, nickname } = this.state;
+
 
         if (this.passwordValidationCheck(password)) { // 데이터 전송 전 비밀번호의 유효성을 검사합니다.
             if (this.state.password === this.state.passwordCheck) {

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
 
 export default class Signin extends React.Component {
     constructor(props) {

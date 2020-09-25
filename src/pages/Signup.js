@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 export default class Signup extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +47,8 @@ export default class Signup extends React.Component {
     submitHandler() {
         let { email, password, fullname, nickname } = this.state;
 
-        if (this.passwordValidationCheck(password)) {
+
+        if (this.passwordValidationCheck(password)) { // 데이터 전송 전 비밀번호의 유효성을 검사합니다.
             if (this.state.password === this.state.passwordCheck) {
                 axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
                     .then(res => {

@@ -8,13 +8,15 @@ import Main from "./pages/Main";
 import Mypage from "./pages/Mypage"
 import axios from "axios"
 
+axios.defaults.withCredentials = true;
+
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ title: "운동", body: "요가 30분, 강아지랑 산책 1시간하기" }, { title: "블로깅", body: "리액트 개념정리, 회고록 작성" }, { title: "영양제 챙겨먹기", body: "비타민제 2알, 유산균 아침에 한알씩" }]
+      todos: []
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);

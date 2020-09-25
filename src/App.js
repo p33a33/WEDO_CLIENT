@@ -20,11 +20,12 @@ class App extends React.Component {
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
+    this.passwordValidationCheck = this.passwordValidationCheck.bind(this)
   }
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
-    axios.all([axios.get("http://18.216.148.52:5000/signin"), axios.get("http://18.216.148.52:5000/main")])
+    axios.all([axios.get("http://18.216.148.52:5000/mypage"), axios.get("http://18.216.148.52:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
       .then(axios.spread((userData, todoData) => {
         this.setState({ userinfo: userData.data, todos: todoData });
       }))
@@ -35,6 +36,25 @@ class App extends React.Component {
     axios
       .post("http://18.216.148.52:5000/signout")
       .catch(e => console.log(e))
+  }
+
+  passwordValidationCheck = (pw) => { // signup과 mypage에서 공통적으로 사용되는 method이기 때문에, app에서 props로 내려주도록 했습니다.
+    let num = pw.search(/[0-9]/g);  // 주어진 pw에 0~9사이에 숫자가 있으면 0, 없으면 -1
+    let eng = pw.search(/[a-z]/ig); // 주어진 pw에 a~z사이에 문자가 있으면 0, 없으면 -1
+    let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); // 주어진 pw에 대괄호 안의 특수문자가 있으면 0, 없으면 -1
+
+    if (pw.length < 8 || pw.length > 20) {
+      alert("비밀번호는 8~20자 이내입니다.")
+      return false;
+    } else if (pw.search(/\s/) !== -1) {
+      alert("비밀번호에는 공백을 포함할 수 없습니다.")
+      return false;
+    } else if (num < 0 || eng < 0 || spe < 0) {
+      alert("비밀번호에는 숫자, 영문, 특수문자가 포함되어야 합니다")
+      return false;
+    } else {
+      return true
+    }
   }
 
   render() {
@@ -50,18 +70,19 @@ class App extends React.Component {
                 <Signin
                   isSignin={isSignin}
                   handleisSigninChange={this.handleisSigninChange}
+                  history={useHistory}
                 />
               )}
             />
             <Route
               exact
               path="/signup"
-              render={() => <Signup isSignin={isSignin} />}
+              render={() => <Signup isSignin={isSignin} pwCheck={this.passwordValidationCheck} />}
             />
             <Route
               exact
               path="/mypage"
-              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} history={useHistory} />}
+              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} history={useHistory} pwCheck={this.passwordValidationCheck} />}
             />
             <Route
               exact

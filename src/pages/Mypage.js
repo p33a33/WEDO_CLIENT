@@ -22,10 +22,9 @@ class Mypage extends React.Component {
     render() {
         return <div className="layout">
             <div className="edit-user">
-                <h1>프로필 수정</h1>
+                <h1>개인정보변경</h1>
                 <div className="edit-nickname">
-                    <h2>닉네임 변경</h2>
-                    <form
+                    <form className="Form ChangeNickname"
                         onSubmit={(e) => {
                             e.preventDefault();
                             return axios
@@ -40,13 +39,13 @@ class Mypage extends React.Component {
                                     console.log(err);
                                 });
                         }}>
+                        <h2>닉네임 변경</h2>
                         <input type="nickname" placeholder="변경할 닉네임" onChange={this.handleInputValue("nickname")}></input>
                         <button type="submit">변경</button>
                     </form>
                 </div>
                 <div className="edit-password">
-                    <h2>비밀번호 변경</h2>
-                    <form
+                    <form className="Form ChangePassword"
                         onSubmit={(e) => {
                             let { pwCheck } = this.props
                             e.preventDefault();
@@ -70,11 +69,11 @@ class Mypage extends React.Component {
                                 }
                             }
                         }}>
+                        <h2>비밀번호 변경</h2>
                         <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("curPassword")}></input>
                         <input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input>
-                        <div>
-                            <input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input> {/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
-                        </div>
+                        <input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input> {/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
+
                         <button type="submit">비밀번호 변경</button>
                     </form>
                 </div>

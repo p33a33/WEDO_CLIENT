@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -35,4 +36,137 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Text{
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 30px;
+color: #000000;
+}
+
+.signinpagebox {
+  padding : auto 20%;
+  height: 100vh;
+  margin: 10% auto;
+}
+
+.textbox{
+  top: 100px;
+  position: relative;
+  float: left;
+  width: 800px;
+  height: 600px;
+  left : calc(50% - 540px/2 - 400px);
+  display : table;
+  vertical-align: middle;
+}
+
+.Sayhi{
+  font-size: 100px;
+  line-height: 141px;
+  text-align: right;
+  color: #FFFFFF;
+  padding-top: 10%;
+}
+
+.Signin {
+  float: right;
+  position: relative;
+width: 350px;
+height: 600px;
+right: calc(50% - 540px/2 - 322px);
+top: 100px;
+vertical-align: middle;
+}
+
+.Form{
+  /* text-align: center; */
+  align-items: center;
+  /* display : flex; */
+  vertical-align: middle;
+}
+
+.Form div {
+  margin-top: 30px;
+}
+
+.Form label {
+  font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 17px;
+line-height: 20px; /* identical to box height */
+align-items: center;
+text-align: center;
+color: #000000;
+}
+
+input::placeholder{
+  color: rgba(0, 0, 0, 0.25);
+  padding-left: 20px;
+}
+
+.Form input {
+  margin-top: 15px;
+  border : 0;
+  background:  #ECF0F3;
+  width: 350px;
+  height: 36px;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  height: 36px;
+  width: 350px;
+  background: #ECF0F3;
+box-shadow: 2px 4px 3px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 3px #FFFFFF;
+border-radius: 15px;
+font-size: 15px;
+font-weight: bold;
+}
+
+
+.Signup{
+  width : 350px;
+  height: 100vh;
+  margin : 10% auto;
+}
+
+.layout{
+  width : 350px;
+  height : 100vh;
+  margin : 10% auto;
+}
+
+.layout h1{
+  text-align: center;
+}
+
+.edit-user button {
+  margin-top : 30px;
+}
+
+.edit-user h2 {
+  margin-top : 50px;
+  margin-bottom : 0px;
+}
+
+.edit-logout {
+  margin-top : 50px;
+}
+
+#GoToSignup {
+  margin-top: 100px;
+  text-align: center;
+  color: #000000;
+  font-weight: bold;
+}
+
+#Login {
+  margin-top: 50px;
 }

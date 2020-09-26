@@ -2,12 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
 
-axios.defaults.withCredentials = true;
-
 export default class Signup extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             email: null,
             password: null,
@@ -16,9 +13,27 @@ export default class Signup extends React.Component {
             nickname: null,
             hasSignedup: false
         }
-
         this.submitHandler = this.submitHandler.bind(this)
         this.valueChange = this.valueChange.bind(this)
+    }
+
+    passwordValidationCheck = (pw) => {
+        let num = pw.search(/[0-9]/g);  // 주어진 pw에 0~9사이에 숫자가 있으면 0, 없으면 -1
+        let eng = pw.search(/[a-z]/ig); // 주어진 pw에 a~z사이에 문자가 있으면 0, 없으면 -1
+        let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi); // 주어진 pw에 대괄호 안의 특수문자가 있으면 0, 없으면 -1
+
+        if (pw.length < 8 || pw.length > 20) {
+            alert("비밀번호는 8~20자 이내입니다.")
+            return false;
+        } else if (pw.search(/\s/) !== -1) {
+            alert("비밀번호에는 공백을 포함할 수 없습니다.")
+            return false;
+        } else if (num < 0 || eng < 0 || spe < 0) {
+            alert("비밀번호에는 숫자, 영문, 특수문자가 포함되어야 합니다")
+            return false;
+        } else {
+            return true
+        }
     }
 
     valueChange = (key) => (e) => {
@@ -27,41 +42,32 @@ export default class Signup extends React.Component {
         })
     }
 
-    redirectHandler = () => {
-        this.setState({
-            hasSignedup: !this.state.hasSignedup
-        })
-    }
-
     submitHandler() {
         let { email, password, fullname, nickname } = this.state;
-        let { pwCheck } = this.props
-        if (email && password && fullname && nickname) { // 빈 칸이 없어야 다음 단계로 넘어갑니다.
-            if (pwCheck(password)) { // 데이터 전송 전 비밀번호의 유효성을 검사합니다.
-                if (this.state.password === this.state.passwordCheck) {
-                    axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
-                        .then(res => {
-                            console.log(res)
-                            if (res.status === 200) {
-                                this.setState({
-                                    hasSignedup: true
-                                })
-                            }
-                        })
-                } else {
-                    return alert("비밀번호가 일치하지 않습니다")
-                }
+
+        if (this.passwordValidationCheck(password)) {
+            if (this.state.password === this.state.passwordCheck) {
+                axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
+                    .then(res => {
+                        console.log(res)
+                        if (res.status === 200) {
+                            this.setState({
+                                hasSignedup: true
+                            })
+                        }
+                    })
+            } else {
+                return alert("비밀번호가 일치하지 않습니다")
             }
-        } else {
-            alert("빈 칸을 채워주세요")
         }
     }
 
     render() {
         if (this.state.hasSignedup) {
             return <Redirect to="/signin" />
-        } else
+        } else {
             return (
+
                 <div id="SignupPage">
                     <form className="Form Signup" onSubmit={(e) => { e.preventDefault(); this.submitHandler(); }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
                         <div><label> 이메일 <input onChange={this.valueChange("email")} type="email" placeholder="이메일을 입력해주세요" /> </label></div> {/* HTML5 내장 이메일 유효성 검사를 진행하도록 수정했습니다 9/24 */}
@@ -74,5 +80,6 @@ export default class Signup extends React.Component {
                     </form>
                 </div >
             )
+        }
     }
 }

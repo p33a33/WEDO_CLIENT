@@ -1,47 +1,54 @@
 import React from 'react';
 import { withRouter, Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
+import { render } from 'react-dom';
+import TodoEntry from "./TodoEntry"
 
 class Main extends React.Component {
     constructor() {
         super()
         this.state = {
-            opened: false,
+            isAddOpened: false,
+            isDeleted: false,
             title: "",
             body: "",
         }
+        this.handleInputValue = this.handleInputValue.bind(this)
     }
+
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     };
+
     render() {
-        if (this.state.opened) {
+        if (this.state.isAddOpened) {
             return <div>
                 <Link to="/mypage"><h3>Mypage</h3></Link>
                 <div className="layout">
                     <h2>Todo List</h2>
                     {this.props.todos.map((todo) => {
-                        return <div className="todo-entry">
-                            <div><h3>{todo.title}</h3></div>
-                            <div>{todo.body}</div>
-                        </div>
+                        return <TodoEntry
+                            key={todo.id} todo={todo} handleInputValue={this.handleInputValue}
+                            handleFetchTodo={this.props.handleFetchTodo} handleEditedData={this.props.handleEditedData} />
                     }
                     )}
+
                 </div>
                 <div className="add-todo">
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             const { title, body } = this.state
-                            this.props.todos.push({ title, body })
-                            this.setState({ opened: !this.state.opened })
-                            //return axios
-                            //    .post("http://18.216.148.52:5000/todowrite", { title, body })
-                            //    .then(() => this.setState({ opened: !this.state.opened }))
-                            //    .catch((err) => {
-                            //        alert("에러가 발생했습니다. 다시 시도해주세요.");
-                            //        console.log(err);
-                            //    });
+                            //this.props.todos.push({ title, body })
+                            //this.setState({ isAddOpened: !this.state.isAddOpened })
+                            return axios
+                                .post("http://localhost:5000/todowrite", { title, body })
+                                .then((res) => { this.props.todos.push(res.data); console.log(res) })
+                                .then(() => this.setState({ isAddOpened: !this.state.isAddOpened }))
+                                .catch((err) => {
+                                    alert("에러가 발생했습니다. 다시 시도해주세요.");
+                                    console.log(err);
+                                });
                         }}
                     >
                         <div>
@@ -59,15 +66,15 @@ class Main extends React.Component {
             <Link to="/mypage"><h3>Mypage</h3></Link>
             <div className="layout">
                 <h2>Todo List</h2>
+                {console.log(this.props)}
                 {this.props.todos.map((todo) => {
-                    return <div className="todo-entry">
-                        <div><h3>{todo.title}</h3></div>
-                        <div>{todo.body}</div>
-                    </div>
+                    return <TodoEntry
+                        key={todo.id} todo={todo} handleInputValue={this.handleInputValue}
+                        handleFetchTodo={this.props.handleFetchTodo} handleEditedData={this.props.handleEditedData} />
                 }
                 )}
             </div>
-            <button onClick={() => { this.setState({ opened: !this.state.opened }) }}>add</button>
+            <button onClick={() => { this.setState({ isAddOpened: !this.state.isAddOpened }) }}>add</button>
         </div>
     }
 }

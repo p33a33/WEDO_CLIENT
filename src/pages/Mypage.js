@@ -8,17 +8,14 @@ class Mypage extends React.Component {
         super();
         this.state = {
             nickname: "",
-            curPassword: "",
             newPassword: "",
             checkNewPassword: "",
         }
         this.handleInputValue = this.handleInputValue.bind(this);
     }
-
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     };
-
     render() {
         return <div className="layout">
             <div className="edit-user">
@@ -28,7 +25,7 @@ class Mypage extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault();
                             return axios
-                                .post("http://18.216.148.52:5000/signeditnickname", { // url을 API문서와 일치시켰습니다. (signedit => signeditnickname)
+                                .post("http://18.216.148.52:5000/signedit", {
                                     nickname: this.state.nickname
                                 })
                                 .then(() => {
@@ -47,32 +44,31 @@ class Mypage extends React.Component {
                 <div className="edit-password">
                     <form className="Form ChangePassword"
                         onSubmit={(e) => {
-                            let { pwCheck } = this.props
+                            //현재 비밀번호 검사는 아직 구현전입니다. 
                             e.preventDefault();
-                            if (pwCheck(this.state.newPassword)) { // 새 비밀번호 유효성 검사를 추가하였습니다.
-                                if (this.state.newPassword !== this.state.checkNewPassword) {
-                                    alert("비밀번호 입력을 다시 확인해주세요.")
-                                }
-                                else {
-                                    return axios
-                                        .post("http://18.216.148.52:5000/signeditpassword", { // url을 API문서와 일치시켰습니다. (signedit => signeditpassword)
-                                            password: this.state.curPassword,   // this.state의 curPassword를 같이 보내주도록 수정했습니다.
-                                            newpassword: this.state.newPassword
-                                        })
-                                        .then(() => {
-                                            alert("비밀번호가 성공적으로 변경되었습니다.");
-                                        })
-                                        .catch((err) => {
-                                            alert("에러가 발생했습니다. 다시 시도해주세요.");
-                                            console.log(err);
-                                        });
-                                }
+                            if (this.state.newPassword !== this.state.checkNewPassword) {
+                                alert("비밀번호 입력을 다시 확인해주세요.")
+                            }
+                            else {
+                                return axios
+                                    .post("http://18.216.148.52:5000/signedit", {
+                                        password: this.state.newPassword
+                                    })
+                                    .then(() => {
+                                        alert("비밀번호가 성공적으로 변경되었습니다.");
+                                    })
+                                    .catch((err) => {
+                                        alert("에러가 발생했습니다. 다시 시도해주세요.");
+                                        console.log(err);
+                                    });
                             }
                         }}>
+
                         <h2>비밀번호 변경</h2>
                         <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("curPassword")}></input>
                         <input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input>
                         <input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input> {/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
+
 
                         <button type="submit">비밀번호 변경</button>
                     </form>

@@ -21,20 +21,35 @@ class App extends React.Component {
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.passwordValidationCheck = this.passwordValidationCheck.bind(this)
+    this.handleEditedData = this.handleEditedData.bind(this)
+    this.handleFetchTodo = this.handleFetchTodo.bind(this)
   }
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
-    axios.all([axios.get("http://18.216.148.52:5000/mypage"), axios.get("http://18.216.148.52:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
+    axios.all([axios.get("http://localhost:5000/mypage"), axios.get("http://localhost:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
       .then(axios.spread((userData, todoData) => {
-        this.setState({ userinfo: userData.data, todos: todoData });
+        this.setState({ userinfo: userData.data, todos: todoData.data });
       }))
   }
-
+  handleEditedData(record) {
+    let temp = this.state.todos
+    console.log(record)
+    for (let i = 0; i < temp.length; i++) {
+      if (record.id === temp[i].id) {
+        temp[i] = record
+      }
+    }
+    console.log(temp)
+    this.setState({ todos: temp })
+  }
+  handleFetchTodo(data) {
+    this.setState({ todos: data })
+  }
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
-      .post("http://18.216.148.52:5000/signout")
+      .post("http://localhost:5000/signout")
       .catch(e => console.log(e))
   }
 
@@ -87,7 +102,7 @@ class App extends React.Component {
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} />}
             />
             <Route
               path="/"

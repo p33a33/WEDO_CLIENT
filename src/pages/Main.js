@@ -9,21 +9,15 @@ class Main extends React.Component {
         super()
         this.state = {
             isAddOpened: false,
-            isModifyOpened: false,
             isDeleted: false,
             title: "",
             body: "",
         }
-        this.handleInputValue = this.handleInputValue.bind(this);
-        this.handleModify = this.handleModify.bind(this);
+        this.handleInputValue = this.handleInputValue.bind(this)
     }
 
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
-    };
-
-    handleModify() {
-        this.setState({ isModifyOpened: !this.state.isModifyOpened })
     };
 
     render() {
@@ -33,27 +27,28 @@ class Main extends React.Component {
                 <div className="layout">
                     <h2>Todo List</h2>
                     {this.props.todos.map((todo) => {
-                        return <div className="todo-entry">
-                            <div><h3>{todo.title}</h3></div>
-                            <div>{todo.body}</div>
-                        </div>
+                        return <TodoEntry
+                            key={todo.id} todo={todo} handleInputValue={this.handleInputValue}
+                            handleFetchTodo={this.props.handleFetchTodo} handleEditedData={this.props.handleEditedData} />
                     }
                     )}
+
                 </div>
                 <div className="add-todo">
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             const { title, body } = this.state
-                            this.props.todos.push({ title, body })
-                            this.setState({ isAddOpened: !this.state.isAddOpened })
-                            //return axios
-                            //    .post("http://18.216.148.52:5000/todowrite", { title, body })
-                            //    .then(() => this.setState({ isAddOpened: !this.state.isAddOpened }))
-                            //    .catch((err) => {
-                            //        alert("에러가 발생했습니다. 다시 시도해주세요.");
-                            //        console.log(err);
-                            //    });
+                            //this.props.todos.push({ title, body })
+                            //this.setState({ isAddOpened: !this.state.isAddOpened })
+                            return axios
+                                .post("http://localhost:5000/todowrite", { title, body })
+                                .then((res) => { this.props.todos.push(res.data); console.log(res) })
+                                .then(() => this.setState({ isAddOpened: !this.state.isAddOpened }))
+                                .catch((err) => {
+                                    alert("에러가 발생했습니다. 다시 시도해주세요.");
+                                    console.log(err);
+                                });
                         }}
                     >
                         <div>
@@ -71,10 +66,11 @@ class Main extends React.Component {
             <Link to="/mypage"><h3>Mypage</h3></Link>
             <div className="layout">
                 <h2>Todo List</h2>
-
-                {this.props.todos.map((todo, index) => {
-                    return <TodoEntry /*key={todo.id}*/ todoKey={index} isModifyOpened={this.state.isModifyOpened}
-                        title={todo.title} body={todo.body} handleModify={this.handleModify} handleNewData={this.props.handleNewData} />
+                {console.log(this.props)}
+                {this.props.todos.map((todo) => {
+                    return <TodoEntry
+                        key={todo.id} todo={todo} handleInputValue={this.handleInputValue}
+                        handleFetchTodo={this.props.handleFetchTodo} handleEditedData={this.props.handleEditedData} />
                 }
                 )}
             </div>

@@ -27,7 +27,7 @@ class App extends React.Component {
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
-    axios.all([axios.get("http://localhost:5000/mypage"), axios.get("http://localhost:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
+    axios.all([axios.get("http://18.216.148.52:5000/mypage"), axios.get("http://18.216.148.52:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
       .then(axios.spread((userData, todoData) => {
         this.setState({ userinfo: userData.data, todos: todoData.data });
       }))
@@ -49,7 +49,7 @@ class App extends React.Component {
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
-      .post("http://localhost:5000/signout")
+      .post("http://18.216.148.52:5000/signout")
       .catch(e => console.log(e))
   }
 

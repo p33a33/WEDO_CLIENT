@@ -2,47 +2,58 @@ import React from 'react';
 import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
 
 export default class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             email: null,
-            password: null
+            password: null,
+            hasAccount: true
         }
         this.submitHandler = this.submitHandler.bind(this)
+        this.hasAccountHandler = this.hasAccountHandler.bind(this)
+        this.valueChange = this.valueChange.bind(this)
     }
 
-    emailChange(e) {
+    valueChange = (stateName) => (e) => { // emailChange와 passwordChange를 valueChange로 통합했습니다.
         this.setState({
-            email: e.target.value
+            [stateName]: e.target.value
         })
     }
 
-    passwordChange(e) {
+    hasAccountHandler = () => { // emailChange와 passwordChange를 valueChange로 통합했습니다.
         this.setState({
-            password: e.target.value
+            hasAccount: false
         })
     }
 
-    submitHandler() {
-        axios.post(`http://18.216.148.52:5000/signin`, this.state)
-            .then(res => {
-                console.log(res)
-                if (res.status === 200) {
-                    this.props.handleisSigninChange();
-                } else {
-                    return alert("아이디나 비밀번호를 다시 확인해주세요") // 왜 작동 안하져?
-                }
-            })
+    submitHandler = () => {
+        let { email, password } = this.state
+        if (email && password) {
+            axios.post(`http://18.216.148.52:5000/signin`, { email, password })
+                .then(res => {
+                    console.log(res)
+                    if (res.status === 200) {
+                        this.props.handleisSigninChange();
+                    } else {
+                        return alert("이메일이나 비밀번호를 다시 확인해주세요") // 왜 작동 안하져?
+                    }
+                })
+        } else {
+            alert("이메일, 비밀번호를 반드시 입력해야합니다")
+        }
     }
 
     render() {
         if (this.props.isSignin) {
             return <Redirect to="/" />
-        } else {
+        } else if (!(this.state.hasAccount)) {
+            return <Redirect to={`/signup`} />
+        }
+        else {
             return (
-
                 <div className="signinpagebox">
                     <div className="textbox">
                         <div className="Text Sayhi">
@@ -56,9 +67,7 @@ export default class Signin extends React.Component {
                         <div id="GoToSignup" onClick={this.hasAccountHandler}>Create a new account</div> {/* /signup 으로 이동하는 Redirect를 구현했습니다*/}
                     </form>
                 </div>
-
             )
         }
     }
 }
-

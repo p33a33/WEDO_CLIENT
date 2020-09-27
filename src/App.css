@@ -148,9 +148,11 @@ margin-top : 50px;
 .edit-logout {
   margin-top : 50px;
 }
+
 .add-todo{
   height : 400px;
 }
+
 .addForm {
   margin : 0 auto;
   width: 500px;
@@ -225,6 +227,7 @@ margin-top : 50px;
 #Login {
   margin-top: 50px;
 }
+
 #deleteButton {
   float: left;
 }

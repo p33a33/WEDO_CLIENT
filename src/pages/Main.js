@@ -16,7 +16,6 @@ class Main extends React.Component {
         this.handleInputValue = this.handleInputValue.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.handleAddOpen = this.handleAddOpen.bind(this)
-        this.renderEachTodo = this.renderEachTodo.bind(this)
     }
 
     handleInputValue = (key) => (e) => {
@@ -26,8 +25,8 @@ class Main extends React.Component {
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleAdd = () => {
         const { title, body } = this.state
-        axios.post("http://18.216.148.52:5000/todowrite", { title, body })
-            .then(res => this.props.todos.push(res.data))
+        axios.post("http://localhost:5000/todowrite", { title, body })
+            .then(res => this.props.handleAddTodo(res.data))
             .then(() => this.handleAddOpen())
             .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) });
     }
@@ -36,19 +35,9 @@ class Main extends React.Component {
         this.setState({ isAddOpened: !this.state.isAddOpened })
     }
 
-    renderEachTodo = (todos) => { // TodoEntry에 props가 많아서 가독성을 높이기 위해 map내용을 메소드로 따로 뺐습니다.
-        todos.map(todo =>
-            <TodoEntry
-                key={todo.id}
-                todo={todo}
-                handleInputValue={this.handleInputValue}
-                handleFetchTodo={this.props.handleFetchTodo}
-                handleEditedData={this.props.handleEditedData} />)
-    }
-
     render() {
         let { isAddOpened } = this.state
-        let { todos } = this.props
+        let { todos, handleEditedData, handleFetchTodo } = this.props
 
         return (
             <div>
@@ -68,8 +57,8 @@ class Main extends React.Component {
                             key={todo.id}
                             todo={todo}
                             handleInputValue={this.handleInputValue}
-                            handleFetchTodo={this.props.handleFetchTodo}
-                            handleEditedData={this.props.handleEditedData} />)}
+                            handleFetchTodo={handleFetchTodo}
+                            handleEditedData={handleEditedData} />)}
                 </div>
             </div >
         )

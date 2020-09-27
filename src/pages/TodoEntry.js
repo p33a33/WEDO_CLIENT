@@ -24,19 +24,20 @@ class TodoEntry extends React.Component {
 
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleModifyOpen = () => {
+        let { isModifyOpened } = this.state
         this.setState({ isModifyOpened: !isModifyOpened })
     }
 
     handleClear = () => {
         const data = { id: this.props.todo.id }
-        axios.post("http://18.216.148.52:5000/clear", data)
+        axios.post("http://localhost:5000/clear", data)
             .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
             .catch((e) => console.log(e))
     }
 
     handleDelete = () => {
         const data = { id: this.props.todo.id }
-        axios.post("http://18.216.148.52:5000/tododelete", data)
+        axios.post("http://localhost:5000/tododelete", data)
             .then((res) => this.props.handleFetchTodo(res.data))
             .then(this.handleModifyOpen)
     }
@@ -44,7 +45,7 @@ class TodoEntry extends React.Component {
     handleModify = () => {
         let { title, body, id } = this.state
         let data = { title: title, body: body, id: id }
-        axios.post("http://18.216.148.52:5000/todoedit", data)
+        axios.post("http://localhost:5000/todoedit", data)
             .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
             .catch((e) => console.log(e))
             .then(this.handleModifyOpen)
@@ -60,8 +61,8 @@ class TodoEntry extends React.Component {
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span>
+                        <button id="deleteButton" onClick={this.handleDelete}>삭제</button>
                         <button type="submit" >수정</button>
-                        <button onClick={this.handleDelete}>삭제</button>
                     </span>
                 </form>
                 <div className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>

@@ -25,7 +25,7 @@ class Mypage extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault();
                             return axios
-                                .post("http://18.216.148.52:5000/signedit", {
+                                .post("http://localhost:5000/signedit", {
                                     nickname: this.state.nickname
                                 })
                                 .then(() => {
@@ -51,7 +51,7 @@ class Mypage extends React.Component {
                             }
                             else {
                                 return axios
-                                    .post("http://18.216.148.52:5000/signedit", {
+                                    .post("http://localhost:5000/signedit", {
                                         password: this.state.newPassword
                                     })
                                     .then(() => {

@@ -32,7 +32,7 @@ export default class Signin extends React.Component {
     submitHandler = () => {
         let { email, password } = this.state
         if (email && password) {
-            axios.post(`http://18.216.148.52:5000/signin`, { email, password })
+            axios.post(`http://localhost:5000/signin`, { email, password })
                 .then(res => {
                     console.log(res)
                     if (res.status === 200) {

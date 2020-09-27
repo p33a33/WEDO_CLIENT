@@ -175,9 +175,14 @@ margin-top : 50px;
   margin-top : 50px;
 }
 
+.add-todo{
+  height : 400px;
+}
+
 .addForm {
   margin : 0 auto;
   width: 500px;
+  height : 400px;
 }
 
 .addForm input {
@@ -251,4 +256,8 @@ todo-body {
 
 #Login {
   margin-top: 50px;
+}
+
+#deleteButton {
+  float: left;
 }

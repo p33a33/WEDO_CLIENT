@@ -16,18 +16,19 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ id: 1, title: "운동하기", body: "요가", isClear: 0 }] // 더미데이터가 추가되어 있습니다.
+      todos: [{ id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }] // 더미데이터가 추가되어 있습니다.
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.passwordValidationCheck = this.passwordValidationCheck.bind(this)
     this.handleEditedData = this.handleEditedData.bind(this)
     this.handleFetchTodo = this.handleFetchTodo.bind(this)
+    this.handleAddTodo = this.handleAddTodo.bind(this)
   }
 
   handleisSigninChange() {
     this.setState({ isSignin: true });
-    axios.all([axios.get("http://18.216.148.52:5000/mypage"), axios.get("http://18.216.148.52:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
+    axios.all([axios.get("http://localhost:5000/mypage"), axios.get("http://localhost:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
       .then(axios.spread((userData, todoData) => {
         this.setState({ userinfo: userData.data, todos: todoData.data });
       }))
@@ -46,10 +47,18 @@ class App extends React.Component {
   handleFetchTodo(data) {
     this.setState({ todos: data })
   }
+  handleAddTodo(data) {
+    let temp = this.state.todos
+    temp.push(data)
+
+    this.setState({
+      todos: temp
+    })
+  }
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
-      .post("http://18.216.148.52:5000/signout")
+      .post("http://localhost:5000/signout")
       .catch(e => console.log(e))
   }
 
@@ -102,7 +111,7 @@ class App extends React.Component {
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
             />
             <Route
               path="/"

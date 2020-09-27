@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: []
+      todos: [{ id: 1, title: "운동하기", body: "요가", isClear: 0 }] // 더미데이터가 추가되어 있습니다.
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);

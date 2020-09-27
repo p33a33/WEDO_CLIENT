@@ -42,8 +42,8 @@ class Main extends React.Component {
                 key={todo.id}
                 todo={todo}
                 handleInputValue={this.handleInputValue}
-                handleFetchTodo={handleFetchTodo}
-                handleEditedData={handleEditedData} />)
+                handleFetchTodo={this.props.handleFetchTodo}
+                handleEditedData={this.props.handleEditedData} />)
     }
 
     render() {
@@ -52,16 +52,25 @@ class Main extends React.Component {
 
         return (
             <div>
-                <Link to="/mypage"><h3>Mypage</h3></Link>
-                <div className="layout"> <h2>Todo List</h2> {this.renderEachTodo(todos)} </div> {/* TodoEntry가 렌더되는 부분입니다*/}
-                <div className="add-todo" style={{ display: isAddOpened ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
-                    <form onSubmit={(e) => { e.preventDefault(); this.handleAdd(); }} >
-                        <div><input type="title" placeholder="제목" onChange={this.handleInputValue("title")} /></div>
-                        <div><textarea type="body" placeholder="내용" onChange={this.handleInputValue("body")} /></div>
-                        <button type="submit">done</button>
-                    </form>
+                <div className="layout">
+                    <Link to="/mypage"><h3>Mypage</h3></Link>
+                    <h2>Todo List</h2>
+                    <button onClick={this.handleAddOpen} style={{ display: isAddOpened ? "none" : "block" }}>add</button> {/*  Add가 열리면 Add 버튼을 숨깁니다. */} {/* TodoEntry가 렌더되는 부분입니다*/}
+                    <div className="add-todo" style={{ display: isAddOpened ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
+                        <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleAdd(); }} >
+                            <div><input type="title" placeholder="제목" onChange={this.handleInputValue("title")} /></div>
+                            <div><textarea type="body" placeholder="내용" onChange={this.handleInputValue("body")} /></div>
+                            <button type="submit">done</button>
+                        </form>
+                    </div>
+                    {todos.map(todo =>
+                        <TodoEntry
+                            key={todo.id}
+                            todo={todo}
+                            handleInputValue={this.handleInputValue}
+                            handleFetchTodo={this.props.handleFetchTodo}
+                            handleEditedData={this.props.handleEditedData} />)}
                 </div>
-                <button onClick={this.handleAddOpen} style={{ display: isAddOpened ? "none" : "block" }}>add</button> {/*  Add가 열리면 Add 버튼을 숨깁니다. */}
             </div >
         )
     }

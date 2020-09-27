@@ -56,9 +56,9 @@ class TodoEntry extends React.Component {
 
         return (
             <div>
-                <form onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
+                <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
-                    <input defaultValue={body} onChange={this.handleInputValue("body")} />
+                    <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span>
                         <button type="submit" >수정</button>
                         <button onClick={this.handleDelete}>삭제</button>
@@ -66,14 +66,14 @@ class TodoEntry extends React.Component {
                 </form>
                 <div className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
                     <div className="todo-title">
-                        <h3 style={{ textDecorationLine: isclear ? 'line-through' : '' }}>{title}
+                        <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }}>{title}
                             <span>
                                 <button onClick={this.handleModifyOpen}>수정</button>
                                 <button onClick={this.handleClear}>clear</button>
                             </span>
-                        </h3>
+                        </h2>
                     </div>
-                    <div>
+                    <div className="todo-body">
                         <h5 style={{ textDecorationLine: isclear ? 'line-through' : '' }} > {body}</h5>
                     </div>
                 </div>

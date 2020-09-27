@@ -82,17 +82,12 @@ vertical-align: middle;
 }
 
 .Form{
-  /* text-align: center; */
   align-items: center;
-  /* display : flex; */
   vertical-align: middle;
 }
 
-.Form div {
-  margin-top: 30px;
-}
-
 .Form label {
+  margin-top : 20px;
   font-family: Roboto;
 font-style: normal;
 font-weight: bold;
@@ -103,14 +98,11 @@ text-align: center;
 color: #000000;
 }
 
-input::placeholder{
-  color: rgba(0, 0, 0, 0.25);
-  padding-left: 20px;
-}
-
 .Form input {
   margin-top: 15px;
   border : 0;
+  box-sizing: border-box;
+  padding: 15px;
   background:  #ECF0F3;
   width: 350px;
   height: 36px;
@@ -121,11 +113,12 @@ input::placeholder{
 button {
   outline: 0;
   border: 0;
+  box-sizing: border-box;
   height: 36px;
   width: 350px;
   background: #ECF0F3;
 box-shadow: 2px 4px 3px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 3px #FFFFFF;
-border-radius: 15px;
+border-radius: 10px;
 font-size: 15px;
 font-weight: bold;
 }
@@ -137,14 +130,36 @@ font-weight: bold;
   margin : 10% auto;
 }
 
+.Signup button{
+margin-top : 50px;
+}
+
+.signInput{
+  margin-left : auto;
+  margin-bottom : 35px
+  }
+
 .layout{
-  width : 350px;
+  width : 600px;
   height : 100vh;
   margin : 10% auto;
 }
 
 .layout h1{
   text-align: center;
+}
+
+.layout h2{
+  text-align: center;
+}
+
+.layout h3{
+  text-align: right;
+}
+
+.layout button {
+  margin : 15px auto;
+  width: 500px;
 }
 
 .edit-user button {
@@ -158,6 +173,73 @@ font-weight: bold;
 
 .edit-logout {
   margin-top : 50px;
+}
+
+.addForm {
+  margin : 0 auto;
+  width: 500px;
+}
+
+.addForm input {
+  border : 0;
+  padding : 15px;
+  box-sizing: border-box;
+  outline : none;
+  background:  #ECF0F3;
+  width: 500px;
+  height: 36px;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.addForm textarea {
+  margin-top: 30px;
+  border : 0;
+  box-sizing: border-box;
+  padding : 15px;
+  outline : none;
+  background:  #ECF0F3;
+  width: 500px;
+  height: 250px;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  resize: none;
+}
+
+.addForm button {
+  float: right;
+  margin-top: 20px;
+  border : 0;
+  padding : 0;
+  background:  #ECF0F3;
+  width: 100px;
+  height: 35px;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.todo-title h2{
+  text-align : left;
+  color :  #ECF0F3
+}
+
+.todo-title button{
+  float: right;
+  text-align : center;
+  width: 50px;
+  margin-left : 15px;
+}
+
+todo-body {
+  width: 500px;
+  height : fit-content;
+  box-sizing: border-box;
+  padding : 15px;
+}
+
+.todo-title h5{
+  text-align : left;
+  color :  #ECF0F3
 }
 
 #GoToSignup {

@@ -10,11 +10,18 @@ export default class Signin extends React.Component {
         this.state = {
             email: null,
             password: null,
-            hasAccount: true
+            hasAccount: true,
+            currentWeatherIcon: null,
+            currentTemp: null,
         }
         this.submitHandler = this.submitHandler.bind(this)
         this.hasAccountHandler = this.hasAccountHandler.bind(this)
         this.valueChange = this.valueChange.bind(this)
+        this.getWeather = this.getWeather.bind(this)
+    }
+
+    componentDidMount = () => {
+        this.getWeather();
     }
 
     valueChange = (stateName) => (e) => { // emailChange와 passwordChange를 valueChange로 통합했습니다.
@@ -29,10 +36,22 @@ export default class Signin extends React.Component {
         })
     }
 
+    getWeather() { // 일단 서울 날씨를 Signin 페이지에 표기합니다.
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&units=metric&lang=kr&appid=${process.env.REACT_APP_WEATHER_API_KEY}`, { // REACT에서 활용할 환경변수는 앞에 REACT_APP_ 이 붙어있어야 한다.
+            withCredentials: false
+        })
+            .then(data => {
+                let { temp } = data.data.main;
+                let { icon } = data.data.weather[0]
+                console.log(data.data)
+                this.setState({ currentTemp: temp.toFixed(1), currentWeatherIcon: icon })
+            })
+    }
+
     submitHandler = () => {
         let { email, password } = this.state
         if (email && password) {
-            axios.post(`http://18.216.148.52:5000/signin`, { email, password })
+            axios.post(`http://localhost:5000/signin`, { email, password })
                 .then(res => {
                     console.log(res)
                     if (res.status === 200) {
@@ -47,6 +66,8 @@ export default class Signin extends React.Component {
     }
 
     render() {
+        let { currentTemp, currentWeatherIcon } = this.state
+
         if (this.props.isSignin) {
             return <Redirect to="/" />
         } else if (!(this.state.hasAccount)) {
@@ -55,6 +76,10 @@ export default class Signin extends React.Component {
         else {
             return (
                 <div className="signinpagebox">
+                    <div className="Text weatherInfo">
+                        <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@4x.png`} className="weatherImage" />
+                        <div className="currentTemp">서울 / {currentTemp} 도</div>
+                    </div>
                     <div className="textbox">
                         <div className="Text Sayhi">
                             안녕하세요? <br></br>

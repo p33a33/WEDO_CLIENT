@@ -39,7 +39,7 @@ export default class Signup extends React.Component {
         if (email && password && fullname && nickname) { // 빈 칸이 없어야 다음 단계로 넘어갑니다.
             if (pwCheck(password)) { // 데이터 전송 전 비밀번호의 유효성을 검사합니다.
                 if (this.state.password === this.state.passwordCheck) {
-                    axios.post(`http://18.216.148.52:5000/signup`, { email, password, fullname, nickname })
+                    axios.post(`http://localhost:5000/signup`, { email, password, fullname, nickname })
                         .then(res => {
                             console.log(res)
                             if (res.status === 200) {

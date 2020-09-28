@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Main from "./pages/Main";
 import Mypage from "./pages/Mypage"
 import axios from "axios"
+import { render } from 'react-dom';
 
 axios.defaults.withCredentials = true;
 

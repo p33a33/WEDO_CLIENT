@@ -3,12 +3,13 @@ import axios from 'axios';
 import { render } from 'react-dom';
 class TodoEntry extends React.Component {
     constructor(props) {
-        super()
+        super(props)
         this.state = {
+            todo: {},
             isTitleClicked: false,
             isModifyOpened: false,
-            title: "",
-            body: "",
+            title: props.todo.title,
+            body: props.todo.body,
             id: props.todo.id
         }
         this.handleInputValue = this.handleInputValue.bind(this)
@@ -18,6 +19,7 @@ class TodoEntry extends React.Component {
         this.handleModifyOpen = this.handleModifyOpen.bind(this)
         this.handleClickTitle = this.handleClickTitle.bind(this)
     }
+
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     }
@@ -37,28 +39,30 @@ class TodoEntry extends React.Component {
     }
     handleDelete = () => {
         const data = { id: this.props.todo.id }
+
         axios.post("http://localhost:5000/tododelete", data)
-            .then((res) => this.props.handleFetchTodo(res.data))
-            .then(this.handleModifyOpen)
+            .then((res) => { this.handleModifyOpen(); this.props.handleFetchTodo(res.data) })
     }
     handleModify = () => {
         let { title, body, id } = this.state
         let data = { title: title, body: body, id: id }
+        console.log(this.props)
         axios.post("http://localhost:5000/todoedit", data)
             .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
             .catch((e) => console.log(e))
             .then(this.handleModifyOpen)
     }
     render() {
-        let { title, body, isclear } = this.props.todo;
+        let { title, body, isclear, id } = this.props.todo;
         let { isModifyOpened, isTitleClicked } = this.state
+
         return (
             <div>
                 <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span>
-                        <button id="deleteButton" onClick={this.handleDelete}>삭제</button>
+                        <button type="button" id="deleteButton" onClick={this.handleDelete}>삭제</button>
                         <button type="submit" >수정</button>
                     </span>
                 </form>
@@ -66,17 +70,19 @@ class TodoEntry extends React.Component {
                     <li className="todo-title">
                         <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}>수정</button>
                         <button className="itm-delete-btn" onClick={this.handleClear}>clear</button>
-                        <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
+                        <h2 defaultValue=" " style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
                         <li className="todo-body">
-                            <h5 style={{
-                                textDecorationLine: isclear ? 'line-through' : '',
-                                display: isTitleClicked ? 'block' : 'none'
-                            }} > {body}</h5>
+                            <h5 defaultValue=" "
+                                style={{
+                                    textDecorationLine: isclear ? 'line-through' : '',
+                                    display: isTitleClicked ? 'block' : 'none'
+                                }} > {body}</h5>
                         </li>
                     </li>
                 </ul>
-            </div>
+            </div >
         )
     }
 }
+
 export default TodoEntry;

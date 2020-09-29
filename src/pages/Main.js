@@ -4,7 +4,6 @@ import axios from 'axios'
 import { render } from 'react-dom';
 import TodoEntry from "./TodoEntry"
 import { Motion, spring } from "react-motion"
-
 class Main extends React.Component {
     constructor() {
         super()
@@ -22,21 +21,17 @@ class Main extends React.Component {
         this.resetForm = this.resetForm.bind(this)
         this.getTime = this.getTime.bind(this)
     }
-
     componentDidMount() {
         this.getTime();
     }
-
     componentDidUpdate(prevProps) {
         if (prevProps.todos.length !== this.props.todos.length) {
             this.setState({ todos: this.props.todos })
         }
     }
-
     getTime() {
         let today = new Date();
         let time = today.getHours()
-
         if (time <= 11) {
             this.setState({ currentTime: "morning" })
         } else if (time <= 18) {
@@ -45,12 +40,9 @@ class Main extends React.Component {
             this.setState({ currentTemp: "evening" })
         }
     }
-
-
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     };
-
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleAdd = () => {
         const { title, body } = this.state
@@ -59,7 +51,6 @@ class Main extends React.Component {
             .then(() => this.handleAddOpen())
             .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) });
     }
-
     handleAddOpen = () => {
         this.setState({ isAddOpened: !this.state.isAddOpened })
     }
@@ -70,7 +61,6 @@ class Main extends React.Component {
     render() {
         let { isAddOpened } = this.state
         let { todos, handleEditedData, handleFetchTodo } = this.props
-
         return (
             <div>
                 <div className="pagebox">
@@ -92,6 +82,7 @@ class Main extends React.Component {
                         <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleAdd(); }} >
                             <div><input type="title" id="titleInput" placeholder="제목" onChange={this.handleInputValue("title")} /></div>
                             <div><textarea type="body" id="bodyInput" placeholder="내용" onChange={this.handleInputValue("body")} /></div>
+                            <button type="reset" onClick={this.handleAddOpen}>cancel</button>
                             <button type="submit" onClick={this.resetForm}>done</button>
                         </form>
                     </div>
@@ -113,5 +104,4 @@ class Main extends React.Component {
         )
     }
 }
-
 export default withRouter(Main)

@@ -20,7 +20,6 @@ class TodoEntry extends React.Component {
         this.handleModifyOpen = this.handleModifyOpen.bind(this)
         this.handleClickTitle = this.handleClickTitle.bind(this)
     }
-
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     }
@@ -40,7 +39,6 @@ class TodoEntry extends React.Component {
     }
     handleDelete = () => {
         const data = { id: this.props.todo.id }
-
         axios.post("http://localhost:5000/tododelete", data)
             .then((res) => { this.handleModifyOpen(); this.props.handleFetchTodo(res.data) })
     }
@@ -56,7 +54,6 @@ class TodoEntry extends React.Component {
     render() {
         let { title, body, isclear, id } = this.props.todo;
         let { isModifyOpened, isTitleClicked } = this.state
-
         return (
             <div>
                 <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
@@ -65,6 +62,7 @@ class TodoEntry extends React.Component {
                     <span>
                         <button type="button" id="deleteButton" onClick={this.handleDelete}></button>
                         <button type="submit" id="editOkay"></button>
+                        <button type="button" id="cancelButton" onClick={this.handleModifyOpen}></button>
                     </span>
                 </form>
                 <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
@@ -78,12 +76,10 @@ class TodoEntry extends React.Component {
                             </li>)}
                         </Motion> : ''}
                         {/* <h5 style={{ textDecorationLine: isclear ? 'line-through' : '', display: isTitleClicked ? 'block' : 'none'}} > {body}</h5> */}
-
                     </li>
                 </ul>
             </div >
         )
     }
 }
-
 export default TodoEntry;

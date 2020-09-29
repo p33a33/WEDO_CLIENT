@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { render } from 'react-dom';
+import { Motion, spring } from "react-motion"
 class TodoEntry extends React.Component {
     constructor(props) {
         super(props)
@@ -62,22 +63,22 @@ class TodoEntry extends React.Component {
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span>
-                        <button type="button" id="deleteButton" onClick={this.handleDelete}>삭제</button>
-                        <button type="submit" >수정</button>
+                        <button type="button" id="deleteButton" onClick={this.handleDelete}></button>
+                        <button type="submit" id="editOkay"></button>
                     </span>
                 </form>
                 <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
                     <li className="todo-title">
-                        <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}>수정</button>
-                        <button className="itm-delete-btn" onClick={this.handleClear}>clear</button>
-                        <h2 defaultValue=" " style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
-                        <li className="todo-body">
-                            <h5 defaultValue=" "
-                                style={{
-                                    textDecorationLine: isclear ? 'line-through' : '',
-                                    display: isTitleClicked ? 'block' : 'none'
-                                }} > {body}</h5>
-                        </li>
+                        <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}></button>
+                        <button onClick={this.handleClear}>clear</button>
+                        <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
+                        {isTitleClicked ? <Motion defaultStyle={{ y: -50, opacity: 0 }} style={{ y: spring(0), opacity: spring(1) }}>
+                            {(style) => (<li className="todo-body" style={{ transform: `translateY(${style.y}px)`, opacitiy: style.opacity }}>
+                                <h5 style={{ textDecorationLine: isclear ? 'line-through' : '' }}>{body}</h5>
+                            </li>)}
+                        </Motion> : ''}
+                        {/* <h5 style={{ textDecorationLine: isclear ? 'line-through' : '', display: isTitleClicked ? 'block' : 'none'}} > {body}</h5> */}
+
                     </li>
                 </ul>
             </div >

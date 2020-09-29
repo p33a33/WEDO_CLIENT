@@ -17,7 +17,12 @@ class Mypage extends React.Component {
         this.setState({ [key]: e.target.value });
     };
     render() {
-        return <div className="layout">
+        return <div className="pagebox">
+            <div className="nav">
+                <button id='edit-logout' onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
+                <button id='gotomypage' onClick={() => { this.props.history.push('/main') }}>돌아가기</button>
+                <button id='followlist'>친구목록</button>
+            </div>
             <div className="edit-user">
                 <h1>개인정보변경</h1>
                 <div className="edit-nickname">
@@ -66,16 +71,16 @@ class Mypage extends React.Component {
 
                         <h2>비밀번호 변경</h2>
                         <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("curPassword")}></input>
-                        <input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input>
-                        <input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input> {/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
+                        <div><input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input></div>
+                        <div><input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input></div>{/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
 
 
                         <button type="submit">비밀번호 변경</button>
                     </form>
+
                 </div>
-                <div className='edit-logout'>
-                    <button onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
-                </div>
+                <button id="xkfxhl"> 회원 탈퇴 </button>
+
             </div>
         </div>
     }

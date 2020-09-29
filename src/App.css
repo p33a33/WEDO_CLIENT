@@ -2,7 +2,6 @@
   text-align: center;
   align-items: center;
 }
-
 .Text{
 font-family: Roboto;
 font-style: normal;
@@ -10,7 +9,6 @@ font-weight: bold;
 font-size: 30px;
 color: black;
 }
-
 .pagebox {
   background: #E3EDF7;
 box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.2);
@@ -22,7 +20,6 @@ border-radius: 50px;
   min-height: 94%;
 height: fit-content;
 }
-
 .textbox{
   margin-top: 50px;
   top: 20px;
@@ -33,7 +30,6 @@ height: fit-content;
   display : table;
   vertical-align: middle;
 }
-
 .Sayhi{
   font-size: 80px;
   line-height: 50px;
@@ -44,19 +40,16 @@ height: fit-content;
   letter-spacing: -7px;
   line-height: 90px;
 }
-
 .Signin {
   position: relative;
   margin : 100px auto 0px auto;
 width: 350px;
 height: 600px;
 }
-
 .Form{
   align-items: center;
   vertical-align: middle;
 }
-
 .Form label {
   margin-top : 20px;
   font-family: Roboto;
@@ -68,7 +61,6 @@ align-items: center;
 text-align: center;
 color: black;
 }
-
 .Form input {
   margin-top: 15px;
   border : 0;
@@ -80,7 +72,6 @@ color: black;
 box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 border-radius: 15px;
 }
-
 button {
   outline: 0;
   border: 0;
@@ -94,31 +85,25 @@ color : #2358AD;
 font-size: 15px;
 font-weight: bold;
 }
-
 button:hover {
   background-color : #BFCFDF;
 }
-
 button:active {
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }
-
 .Signup{
   width : 350px;
   height: 100vh;
   margin : 10% auto;
 }
-
 .Signup button{
 margin-top : 50px;
 width : 350px;
 }
-
 .signInput{
   margin-left : auto;
   margin-bottom : 35px
   }
-
 .pagebox h1{
   text-align: center;
 }
@@ -128,15 +113,12 @@ width : 350px;
   text-align: left;
   letter-spacing: 5px;
 }
-
 .pagebox h3{
   text-align: right;
 }
-
 .add-todo{
   height : 400px;
 }
-
 .itm-modify-btn {
   width : 50px;
   height : 50px;
@@ -145,7 +127,6 @@ width : 350px;
   background-position: center;
   background-repeat: no-repeat;
 }
-
 #editOkay {
   width : 50px;
   height : 50px;
@@ -153,8 +134,9 @@ width : 350px;
   background-size: 25px;
   background-position: center;
   background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
 }
-
 #deleteButton {
   width : 50px;
   height : 50px;
@@ -163,8 +145,18 @@ width : 350px;
   background-position: center;
   background-repeat: no-repeat;
   float: left;
+  margin: 5px;
 }
-
+#cancelButton{
+  width : 50px;
+  height : 50px;
+  background-image: url(../src/images/cancel.png);
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
+}
 .addForm {
   margin : 0 auto;
   width: 500px;
@@ -215,7 +207,6 @@ width : 350px;
   width: 50px;
   margin-left : 15px;
 }
-
 .todo-entry{
   padding : 0;
 }
@@ -233,7 +224,6 @@ width : 350px;
   text-align : left;
   color :  black;
 }
-
 .weatherInfo {
   width : 250px;
   height : 250px;
@@ -242,7 +232,6 @@ width : 350px;
   border-radius: 100%;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
 }
-
 .weatherImage {
   margin : -40px;
   margin-top : -10px;
@@ -250,34 +239,27 @@ width : 350px;
   height : 200px;
   top : 0;
 }
-
 .currentTemp {
   margin : 0px auto;
 }
-
 .edit-user{
   text-align: center;
   padding-top : 15px;
 }
-
 .edit-user button {
   margin-top : 30px;
 }
-
-
 .edit-user h1 {
   letter-spacing: normal;
   font-size : 50px;
   margin-top : 40px;
 }
-
 .edit-user h2 {
   letter-spacing: normal;
   font-size : 40px;
   margin-top : 3px;
   margin-bottom : 50px;
 }
-
 .edit-nickname {
   margin : 0 auto;
   box-sizing: border-box;
@@ -288,11 +270,9 @@ width : 350px;
   margin-top: 70px;
   box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.25), inset 4px 4px 4px rgba(255, 255, 255, 0.25);
 }
-
 .edit-nickname button{
   width: 350px;
 }
-
 .edit-password {
   margin : 0 auto;
   box-sizing: border-box;
@@ -303,39 +283,31 @@ width : 350px;
   margin-top: 100px;
   box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.25), inset 4px 4px 4px rgba(255, 255, 255, 0.25);
 }
-
 .edit-password input{
   margin-top : 30px;
 }
-
 .edit-password button{
   width: 350px;
 }
-
 #GoToSignup {
   margin-top: 100px;
   text-align: center;
   color: #ffffff;
   font-weight: bold;
 }
-
 #Login {
   margin-top: 50px;
 }
-
-
 .nav button {
   float: right;
   width : 100px;
   margin-left : 20px;
 }
-
 #xkfxhl{
   margin-top:100px;
   width : 350px;
   height : 50px;
 }
-
 #addButton{
   width : 400px;
   height : 40px;

@@ -17,7 +17,18 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }] // 더미데이터가 추가되어 있습니다.
+      todos: [{ id: 1, title: "111", body: "1111" },
+      { id: 2, title: "111", body: "1111" },
+      { id: 3, title: "111", body: "1111" },
+      { id: 4, title: "111", body: "1111" },
+      { id: 5, title: "111", body: "1111" },
+      { id: 6, title: "111", body: "1111" },
+      { id: 7, title: "111", body: "1111" },
+      { id: 8, title: "111", body: "1111" },
+      { id: 9, title: "111", body: "1111" },
+      { id: 10, title: "111", body: "1111" },
+      { id: 11, title: "111", body: "1111" },
+      { id: 12, title: "111", body: "1111" }]
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
@@ -107,12 +118,12 @@ class App extends React.Component {
             <Route
               exact
               path="/mypage"
-              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} history={useHistory} pwCheck={this.passwordValidationCheck} />}
+              render={() => <Mypage isSignin={isSignin} handleSignout={this.handleSignout} userinfo={userinfo} history={useHistory} pwCheck={this.passwordValidationCheck} />}
             />
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
             />
             <Route
               path="/"

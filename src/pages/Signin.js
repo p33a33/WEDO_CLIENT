@@ -75,15 +75,10 @@ export default class Signin extends React.Component {
         }
         else {
             return (
-                <div className="signinpagebox">
+                <div className="pagebox">
                     <div className="Text weatherInfo">
                         <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@4x.png`} className="weatherImage" />
                         <div className="currentTemp">서울 / {currentTemp} 도</div>
-                    </div>
-                    <div className="textbox">
-                        <div className="Text Sayhi">
-                            안녕하세요? <br></br>
-                        좋은 아침이에요</div>
                     </div>
                     <form className="Form Signin" onSubmit={(e) => { e.preventDefault(); this.submitHandler() }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
                         <label>Email address

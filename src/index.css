@@ -1,4 +1,5 @@
-body {
+html, body {
+  min-height: 100%;
   background-color: #D7E3EF;
   background-size: cover;
   font-family: '나눔고딕', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

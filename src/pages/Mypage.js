@@ -20,8 +20,8 @@ class Mypage extends React.Component {
         return <div className="pagebox">
             <div className="nav">
                 <button id='edit-logout' onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
-                <button id='gotomypage' onClick={() => { this.props.history.push('/main') }}>돌아가기</button>
-                <button id='followlist'>친구목록</button>
+                <button id='followlist' onClick={() => { this.props.history.push('/followlist') }}> 친구목록</button>
+                <button id='gotomypage' onClick={() => { this.props.history.push('/main') }}>Todo List</button>
             </div>
             <div className="edit-user">
                 <h1>개인정보변경</h1>
@@ -30,7 +30,7 @@ class Mypage extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault();
                             return axios
-                                .post("http://localhost:5000/signedit", {
+                                .post("http://localhost:5000/signeditnickname", {
                                     nickname: this.state.nickname
                                 })
                                 .then(() => {
@@ -56,7 +56,7 @@ class Mypage extends React.Component {
                             }
                             else {
                                 return axios
-                                    .post("http://localhost:5000/signedit", {
+                                    .post("http://localhost:5000/signeditpassword", {
                                         password: this.state.newPassword
                                     })
                                     .then(() => {

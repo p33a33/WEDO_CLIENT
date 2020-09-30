@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Main from "./pages/Main";
 import Mypage from "./pages/Mypage"
+import FollowList from "./pages/FollowList"
 import axios from "axios"
 import { render } from 'react-dom';
 
@@ -17,18 +18,7 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ id: 1, title: "111", body: "1111" },
-      { id: 2, title: "111", body: "1111" },
-      { id: 3, title: "111", body: "1111" },
-      { id: 4, title: "111", body: "1111" },
-      { id: 5, title: "111", body: "1111" },
-      { id: 6, title: "111", body: "1111" },
-      { id: 7, title: "111", body: "1111" },
-      { id: 8, title: "111", body: "1111" },
-      { id: 9, title: "111", body: "1111" },
-      { id: 10, title: "111", body: "1111" },
-      { id: 11, title: "111", body: "1111" },
-      { id: 12, title: "111", body: "1111" }]
+      todos: []
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
@@ -94,7 +84,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isSignin, userinfo, todos } = this.state;
+    const { isSignin, userinfo, todos, followinfo } = this.state;
     console.log(isSignin, userinfo);
     return (
       <div>
@@ -124,6 +114,11 @@ class App extends React.Component {
               exact
               path="/main"
               render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
+            />
+            <Route
+              exact
+              path="/followlist"
+              render={() => <FollowList userinfo={userinfo} isSignin={isSignin} handleSignout={this.handleSignout} history={useHistory} followinfo={followinfo} han />}
             />
             <Route
               path="/"

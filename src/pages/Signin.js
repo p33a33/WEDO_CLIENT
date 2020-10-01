@@ -13,15 +13,21 @@ export default class Signin extends React.Component {
             hasAccount: true,
             currentWeatherIcon: null,
             currentTemp: null,
+            currentTime: {
+                hour: null,
+                minutes: null
+            }
         }
         this.submitHandler = this.submitHandler.bind(this)
         this.hasAccountHandler = this.hasAccountHandler.bind(this)
         this.valueChange = this.valueChange.bind(this)
         this.getWeather = this.getWeather.bind(this)
+        this.getTime = this.getTime.bind(this)
     }
 
     componentDidMount = () => {
         this.getWeather();
+        setInterval(this.getTime, 1000)
     }
 
     valueChange = (stateName) => (e) => { // emailChange와 passwordChange를 valueChange로 통합했습니다.
@@ -64,7 +70,14 @@ export default class Signin extends React.Component {
             alert("이메일, 비밀번호를 반드시 입력해야합니다")
         }
     }
-
+    getTime() {
+        let day = new Date()
+        let time = {}
+        let str = day.toLocaleTimeString().split(':')
+        time.hour = str[0]
+        time.minutes = str[1]
+        this.setState({ currentTime: time })
+    }
     render() {
         let { currentTemp, currentWeatherIcon } = this.state
 
@@ -76,23 +89,31 @@ export default class Signin extends React.Component {
         else {
             return (
                 <div className="pagebox">
+                    <div className="currentTime">
+                        현재 시각은
+                        <p>
+                            <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
+                        </p>
+                    </div>
                     <div className="Text weatherInfo">
                         <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@4x.png`} className="weatherImage" />
                         <div className="currentTemp">서울 / {currentTemp} 도</div>
                     </div>
-                    <form className="Form Signin" onSubmit={(e) => { e.preventDefault(); this.submitHandler() }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
-                        <label>Email address
+                    <div id="logo"><h1></h1></div>
+                    <form className="Form Signin" method="POST" action="http://localhost:5000/signin" > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
+                        <label>
                             <div className="signInput">
-                                <input onChange={this.valueChange("email")} type="email" placeholder="이메일을 입력해주세요" />
+                                <input onChange={this.valueChange("email")} name="email" type="email" placeholder="이메일을 입력해주세요" />
                             </div>
                         </label> {/* HTML5 내장 이메일 유효성 검사를 진행하도록 수정했습니다 9/24 */}
-                        <label>Password
+                        <label>
                             <div className="signInput">
-                                <input onChange={this.valueChange("password")} type="password" placeholder="비밀번호를 입력해주세요" />
+                                <input onChange={this.valueChange("password")} name="password" type="password" placeholder="비밀번호를 입력해주세요" />
                             </div>
                         </label>
-                        <div>
+                        <div className="signupButtons">
                             <button id="Login" type="submit">로그인</button>
+                            <button id="OauthGoogle" onClick={() => { window.location.replace('http://localhost:5000/auth/google') }}>Sign in with Google</button>
                         </div>
                         <div id="GoToSignup" onClick={this.hasAccountHandler}>Create a new account</div> {/* /signup 으로 이동하는 Redirect를 구현했습니다*/}
                     </form>

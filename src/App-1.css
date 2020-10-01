@@ -15,6 +15,7 @@ color: black;
   box-sizing: border-box;
   border-radius: 50px;
   padding : 40px;
+  padding-top: 60px;
   margin: 2% auto;
   width: 925px;
   min-height: 1350px;
@@ -42,7 +43,7 @@ height: fit-content;
 }
 .Signin {
   position: relative;
-  margin : 100px auto 0px auto;
+  margin : 50px auto 0px auto;
 width: 350px;
 height: 600px;
 }
@@ -81,7 +82,7 @@ button {
   background: #E3EDF7;
   box-shadow: -3.92441px -3.92441px 14.6509px #F9FBFD, 5.23254px 5.23254px 10.4651px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
-color : #2358AD;
+color : #3c3cdb;
 font-size: 15px;
 font-weight: bold;
 }
@@ -262,9 +263,9 @@ width : 350px;
 }
 .weatherInfo {
   color: #E3EDF7;
-  background: linear-gradient(145deg, #460f57 8%, #00587A 28.73%, rgba(0, 104, 145, 0.9) 51.65%, rgba(231, 231, 222, 0.349) 87.07%);
-  width : 250px;
-  height : 250px;
+  background: linear-gradient(200deg, #2e2e99 0%,#3c5a90 33%, #6bafaa9d 100%);
+  width : 170px;
+  height : 170px;
   margin-left : 5%;
   text-align: center;
   border-radius: 100%;
@@ -285,18 +286,21 @@ width : 350px;
 .weatherImage {
   margin : -40px;
   margin-top : -10px;
-  width : 200px;
-  height : 200px;
+  width : 150px;
+  height : 150px;
   top : 0;
 }
 .currentTemp {
   margin : 0px auto;
+  font-size: 22px;
 }
 .currentTime{
-  padding: 10px;
-  font-size: 25px;
+  text-align: right;
+  line-height:10%;
+  padding: 20px;
+  font-size: 50px;
   float: right;
-  background : linear-gradient(180deg, #3C8AFA 0%, #0038FD 100%);
+  background : linear-gradient(180deg,  #8ec8f8 0%,#86A8E7 50%, #3c3cdb 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -348,27 +352,27 @@ width : 350px;
   width: 350px;
 }
 #GoToSignup {
-  margin-top: 100px;
+  margin-top: 30px;
   text-align: center;
-  color: #2358AD;
+  color: #7F7FD5;
   font-weight: bold;
   text-decoration: underline;
 }
 #GoToSignup:hover{
-  color: #ff0000;
+  color: #86A8E7;
   text-decoration: none;
 
 }
 #GoToSignup:active{
-  color:#949494;
+  color:#7F7FD5;
 }
 #Login {
-  margin-top: 50px;
+  margin-top: 30px;
   font-weight: 800;
 }
 #OauthGoogle {
   font-weight: 800;
-  margin-top: 20px;
+  margin-top: 110px;
   background-image: url(../src/images/google.png);
   background-repeat: no-repeat;
   background-size: 28px;
@@ -515,4 +519,12 @@ ul {
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
+}
+
+#logo{
+  color:gray;
+  background-image: url(../src/images/tmp_logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 280px;
 }

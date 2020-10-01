@@ -48,10 +48,15 @@ class Main extends React.Component {
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleAdd = () => {
         const { title, body } = this.state
-        axios.post("http://localhost:5000/todowrite", { title, body })
-            .then(res => this.props.handleAddTodo(res.data))
-            .then(() => this.handleAddOpen())
-            .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) });
+        if (title && body) {
+            axios.post("http://localhost:5000/todowrite", { title, body })
+                .then(res => this.props.handleAddTodo(res.data))
+                .then(() => this.handleAddOpen())
+                .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) });
+        }
+        else {
+            alert("내용을 입력해주세요.")
+        }
     }
     handleAddOpen = () => {
         this.setState({ isAddOpened: !this.state.isAddOpen })
@@ -87,8 +92,10 @@ class Main extends React.Component {
                         <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleAdd(); this.resetForm(); }} >
                             <div><input type="title" id="titleInput" placeholder="제목" onChange={this.handleInputValue("title")} /></div>
                             <div><textarea type="body" id="bodyInput" placeholder="내용" onChange={this.handleInputValue("body")} /></div>
-                            <button type="reset" onClick={this.handleAddOpen}>cancel</button>
-                            <button type="submit">done</button>
+                            <span className="editFormButtons">
+                                <button id="cancelButton-main" type="reset" onClick={this.handleAddOpen}></button>
+                                <button id="editOkay-main" type="submit"></button>
+                            </span>
                         </form>
                     </div>
                     <Motion

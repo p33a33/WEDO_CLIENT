@@ -11,7 +11,8 @@ class TodoEntry extends React.Component {
             isModifyOpened: false,
             title: props.todo.title,
             body: props.todo.body,
-            id: props.todo.id
+            id: props.todo.id,
+            isclear: false
         }
         this.handleInputValue = this.handleInputValue.bind(this)
         this.handleClear = this.handleClear.bind(this)
@@ -42,14 +43,23 @@ class TodoEntry extends React.Component {
         axios.post("http://localhost:5000/tododelete", data)
             .then((res) => { this.handleModifyOpen(); this.props.handleFetchTodo(res.data) })
     }
+    handleClearforClient() {
+        this.setState({ isclear: !this.state.isclear })
+    }
     handleModify = () => {
         let { title, body, id } = this.state
         let data = { title: title, body: body, id: id }
         console.log(this.props)
-        axios.post("http://localhost:5000/todoedit", data)
-            .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
-            .catch((e) => console.log(e))
-            .then(this.handleModifyOpen)
+        if (title && body) {
+            axios.post("http://localhost:5000/todoedit", data)
+                .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
+                .catch((e) => console.log(e))
+                .then(this.handleModifyOpen)
+
+        }
+        else {
+            alert("내용을 입력해주세요.")
+        }
     }
     render() {
         let { title, body, isclear, id } = this.props.todo;
@@ -59,7 +69,7 @@ class TodoEntry extends React.Component {
                 <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
-                    <span>
+                    <span className="editFormButtons">
                         <button type="button" id="deleteButton" onClick={this.handleDelete}></button>
                         <button type="submit" id="editOkay"></button>
                         <button type="button" id="cancelButton" onClick={this.handleModifyOpen}></button>
@@ -67,8 +77,11 @@ class TodoEntry extends React.Component {
                 </form>
                 <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
                     <li className="todo-title">
-                        <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}></button>
-                        <button id={isclear === 1 ? "clear" : "yet"} onClick={this.handleClear}></button>
+                        <span className="editFormButtons">
+                            <button id={isclear ? "done" : "yet"} onClick={() => { this.handleClear }}></button>
+                            {/*<button id={this.state.isclear ? "done" : "yet"} onClick={() => { console.log(this); this.handleClearforClient() }}></button>*/}
+                            <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}></button>
+                        </span>
                         <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
                         {isTitleClicked ?
                             <Motion defaultStyle={{ y: -100, opacity: 0 }} style={{ y: spring(0), opacity: spring(1) }}>

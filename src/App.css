@@ -86,7 +86,7 @@ font-size: 15px;
 font-weight: bold;
 }
 button:hover {
-  background-color : #BFCFDF;
+  background-color : #cbd6e0d8;
 }
 button:active {
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
@@ -120,18 +120,42 @@ width : 350px;
   height : 400px;
 }
 .itm-modify-btn {
+  margin: 10px;
   width : 50px;
   height : 50px;
   background-image: url(../src/images/edit.png);
   background-size: 35px;
   background-position: center;
   background-repeat: no-repeat;
+  
 }
 #editOkay {
   width : 50px;
   height : 50px;
   background-image: url(../src/images/editOkay.png);
   background-size: 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
+}
+#editOkay-main {
+  border-radius: 100%;
+  width : 50px;
+  height : 50px;
+  background-image: url(../src/images/add3.png);
+  background-size: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
+}
+#cancelButton-main{
+  border-radius: 100%;
+  width : 50px;
+  height : 50px;
+  background-image: url(../src/images/cancel.png);
+  background-size: 18px;
   background-position: center;
   background-repeat: no-repeat;
   float: right;
@@ -156,6 +180,12 @@ width : 350px;
   background-repeat: no-repeat;
   float: right;
   margin: 5px;
+}
+.editFormButtons button:active{
+  box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
+}
+.editFormButtons button:hover{
+  background-color : #cbd6e0d8;
 }
 .addForm {
   margin : 0 auto;
@@ -198,6 +228,7 @@ width : 350px;
   border-radius: 10px;
 }
 .todo-title h2{
+  margin-left: -25px;
   text-align : left;
   color :  black
 }
@@ -205,12 +236,12 @@ width : 350px;
   float: right;
   text-align : center;
   width: 50px;
-  margin-left : 15px;
 }
 .todo-entry{
-  padding : 0;
+  padding : 2px;
 }
 .todo-body {
+  margin-left: 40px;
   width: 500px;
   height : fit-content;
   box-sizing: border-box;
@@ -218,13 +249,20 @@ width : 350px;
   list-style-type: none;
 }
 .todo-title {  
+  padding: 1px;
   list-style-type: none;
+  border-radius: 15px;
+  box-shadow: -3.92441px -3.92441px 14.6509px #F9FBFD, 5.23254px 5.23254px 10.4651px rgba(0, 0, 0, 0.25);
+  
 }
 .todo-title h5{
+  padding : 10px;
   text-align : left;
   color :  black;
 }
 .weatherInfo {
+  color: #E3EDF7;
+  background: linear-gradient(145deg, #460f57 8%, #00587A 28.73%, rgba(0, 104, 145, 0.9) 51.65%, rgba(231, 231, 222, 0.349) 87.07%);
   width : 250px;
   height : 250px;
   margin-left : 10%;
@@ -232,6 +270,17 @@ width : 350px;
   border-radius: 100%;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
 }
+.weatherInfo-day {
+  color: #E3EDF7;
+  background: linear-gradient(145deg,#0fc0ecbe 0%, #eaecc68c 100%);
+  width : 250px;
+  height : 250px;
+  margin-left : 10%;
+  text-align: center;
+  border-radius: 100%;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
+}
+
 .weatherImage {
   margin : -40px;
   margin-top : -10px;
@@ -242,6 +291,7 @@ width : 350px;
 .currentTemp {
   margin : 0px auto;
 }
+
 .edit-user{
   text-align: center;
   padding-top : 15px;
@@ -309,6 +359,7 @@ width : 350px;
   height : 50px;
 }
 #addButton{
+ 
   width : 400px;
   height : 40px;
   margin: 0 auto;
@@ -347,7 +398,7 @@ width : 350px;
   box-sizing: border-box;
   padding : 10px 0;
   padding-left : 10px;
-  background:  #E3EDF7;
+  background:  #e3f4f7;
   height: 50px;
   border-radius: 10px;
 }
@@ -419,9 +470,9 @@ ul {
 #yet {
   width : 50px;
   height : 50px;
-  margin-left : 40px;
+  margin: 10px;
   float : right;
-  background-image: url(../src/images/yet.png);
+  background-image: url(../src/images/yet2.png);
   background-size: 35px;
   background-position: center;
   background-repeat: no-repeat;
@@ -430,10 +481,11 @@ ul {
 #done {
   width : 50px;
   height : 50px;
-  margin-left : 40px;
+  margin: 10px;
   float : right;
   background-image: url(../src/images/done.png);
   background-size: 35px;
   background-position: center;
   background-repeat: no-repeat;
+  box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }

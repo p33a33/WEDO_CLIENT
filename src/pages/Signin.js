@@ -53,23 +53,6 @@ export default class Signin extends React.Component {
                 this.setState({ currentTemp: temp.toFixed(1), currentWeatherIcon: icon })
             })
     }
-
-    submitHandler = () => {
-        let { email, password } = this.state
-        if (email && password) {
-            axios.post(`http://localhost:5000/signin`, { email, password })
-                .then(res => {
-                    console.log(res)
-                    if (res.status === 200) {
-                        this.props.handleisSigninChange();
-                    } else {
-                        return alert("이메일이나 비밀번호를 다시 확인해주세요") // 왜 작동 안하져?
-                    }
-                })
-        } else {
-            alert("이메일, 비밀번호를 반드시 입력해야합니다")
-        }
-    }
     getTime() {
         let day = new Date()
         let time = {}

@@ -19,7 +19,6 @@ export default class Signin extends React.Component {
             },
             current: null,
         }
-        this.submitHandler = this.submitHandler.bind(this)
         this.hasAccountHandler = this.hasAccountHandler.bind(this)
         this.valueChange = this.valueChange.bind(this)
         this.getWeather = this.getWeather.bind(this)
@@ -37,7 +36,7 @@ export default class Signin extends React.Component {
         })
     }
 
-    hasAccountHandler = () => { // emailChange와 passwordChange를 valueChange로 통합했습니다.
+    hasAccountHandler = () => {
         this.setState({
             hasAccount: false
         })

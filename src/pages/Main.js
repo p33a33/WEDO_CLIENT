@@ -15,14 +15,18 @@ class Main extends React.Component {
             body: "",
             currentTime: { hour: null, minutes: null },
             current: null,
+            currentWeatherIcon: null,
+            currentTemp: null,
         }
         this.handleInputValue = this.handleInputValue.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.handleAddOpen = this.handleAddOpen.bind(this)
         this.resetForm = this.resetForm.bind(this)
         this.getTime = this.getTime.bind(this)
+        this.getWeather = this.getWeather.bind(this)
     }
     componentDidMount() {
+        this.getWeather()
         setInterval(this.getTime, 1000)
     }
     componentDidUpdate(prevProps) {
@@ -73,8 +77,19 @@ class Main extends React.Component {
         document.querySelector("#bodyInput").value = null
         this.setState({ title: null, body: null }) // Form reset시 state도 비워주는 구문을 추가했습니다.
     }
+    getWeather() { // 일단 서울 날씨를 Signin 페이지에 표기합니다.
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&units=metric&lang=kr&appid=${process.env.REACT_APP_WEATHER_API_KEY}`, { // REACT에서 활용할 환경변수는 앞에 REACT_APP_ 이 붙어있어야 한다.
+            withCredentials: false
+        })
+            .then(data => {
+                let { temp } = data.data.main;
+                let { icon } = data.data.weather[0]
+                console.log(data.data)
+                this.setState({ currentTemp: temp.toFixed(1), currentWeatherIcon: icon })
+            })
+    }
     render() {
-        let { isAddOpen } = this.state
+        let { isAddOpen, currentWeatherIcon, currentTemp } = this.state
         let { todos, handleEditedData, handleFetchTodo } = this.props
         return (
             <div>
@@ -83,10 +98,16 @@ class Main extends React.Component {
                         <button id='edit-logout' onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
                         <button id='gotomypage' onClick={() => { this.props.history.push('/mypage') }}>Mypage</button>
                         <button id='followlist' onClick={() => { this.props.history.push('/followlist') }}>친구목록</button>
+                        <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
+                            <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`} className="weatherImage" />
+                            <div className="currentTemp">
+                                서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p>
+                            </div>
+                        </div>
                         <div className="currentTime-main" >
-                            현재 시각은
+                            현재 시각
                         <p>
-                                <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b> 입니다.
+                                <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
                             </p>
                         </div>
                     </div>

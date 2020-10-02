@@ -97,15 +97,20 @@ export default class Signin extends React.Component {
         else {
             return (
                 <div className="pagebox">
-                    <div className="currentTime">
-                        현재 시각은
+                    <div className="weather">
+                        <div className="currentTime">
+                            현재 시각은
                         <p>
-                            <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
-                        </p>
-                    </div>
-                    <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
-                        <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@4x.png`} className="weatherImage" />
-                        <div className="currentTemp">서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p></div>
+                                <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
+                            </p>
+                        </div>
+
+                        <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
+                            <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`} className="weatherImage" />
+                            <div className="currentTemp">
+                                서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p>
+                            </div>
+                        </div>
                     </div>
                     <div id="logo"><h1></h1></div>
                     <form className="Form Signin" method="POST" action="http://localhost:5000/signin" > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}

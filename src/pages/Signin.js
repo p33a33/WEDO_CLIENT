@@ -16,7 +16,8 @@ export default class Signin extends React.Component {
             currentTime: {
                 hour: null,
                 minutes: null
-            }
+            },
+            current: null,
         }
         this.submitHandler = this.submitHandler.bind(this)
         this.hasAccountHandler = this.hasAccountHandler.bind(this)
@@ -76,6 +77,13 @@ export default class Signin extends React.Component {
         let str = day.toLocaleTimeString().split(':')
         time.hour = str[0]
         time.minutes = str[1]
+        let hours = day.getHours()
+        if (hours >= 8 && hours <= 19) {
+            this.setState({ current: "day" })
+        }
+        else {
+            this.setState({ current: "night" })
+        }
         this.setState({ currentTime: time })
     }
     render() {
@@ -95,9 +103,9 @@ export default class Signin extends React.Component {
                             <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
                         </p>
                     </div>
-                    <div className="Text weatherInfo">
+                    <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
                         <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@4x.png`} className="weatherImage" />
-                        <div className="currentTemp">서울 / {currentTemp} 도</div>
+                        <div className="currentTemp">서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p></div>
                     </div>
                     <div id="logo"><h1></h1></div>
                     <form className="Form Signin" method="POST" action="http://localhost:5000/signin" > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}

@@ -76,7 +76,7 @@ class TodoEntry extends React.Component {
                     </span>
                 </form>
                 <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
-                    <li className="todo-title">
+                    <div className="todo-title">
                         <span className="editFormButtons">
                             <button id={isclear ? "done" : "yet"} onClick={() => { this.handleClear }}></button>
                             {/*<button id={this.state.isclear ? "done" : "yet"} onClick={() => { console.log(this); this.handleClearforClient() }}></button>*/}
@@ -91,9 +91,8 @@ class TodoEntry extends React.Component {
                             </Motion>
                             : ''
                         }
-
                         {/* <h5 style={{ textDecorationLine: isclear ? 'line-through' : '', display: isTitleClicked ? 'block' : 'none'}} > {body}</h5> */}
-                    </li>
+                    </div>
                 </ul>
             </div >
         )

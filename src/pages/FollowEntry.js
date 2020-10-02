@@ -7,13 +7,13 @@ import { Motion, spring } from "react-motion"
 export default function FollowEntry(props) {
 
     let handleUnfollow = () => {
-        axios.post(`http://localhost:5000/followdelete`, { followid: props.follower.user_id })
+        axios.post(`http://localhost:5000/followdelete`, { friendid: props.follower.user_id })
             .then(res => {
                 let newList = res.data
+                console.log(data);
                 props.handleNewFollowList(newList)
             })
     }
-    { console.log(props) }
     return (
         <li className="follower">
             <div className="followerbox">

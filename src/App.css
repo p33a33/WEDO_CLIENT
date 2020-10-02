@@ -533,6 +533,8 @@ ul {
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }
 
+
+/* =====================================10/2 수정 ====================================== */
 #shareForm-main {
   float : right;
   width : 200px;
@@ -558,12 +560,66 @@ ul {
 }
 
 #shareTo {
-  position: relative;
+  padding-top : 10px;
+  padding-left : 25px;
   border-radius: 15px;
   box-sizing: border-box;
   float: right;
+  background-color: #E3EDF7;
   margin-top: 30px;
   width : 250px;
   height : 250px;
-  border : black solid;
+  box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
+}
+
+#shareButton-main-Active{ /* share 상태 on*/
+  border-radius: 100%;
+  width : 50px;
+  height : 50px;
+  /* background-image: url(../src/images/add3.png); */
+  background-color: #ffffff;
+  background-size: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
+  box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
+}
+
+.searchFriendEntry {
+  width : 200px;
+  float: left;
+  margin : 10px auto;
+  font-size : 20px;
+}
+
+.toLeft {
+  float: left;
+  margin-left: 50px;
+}
+
+#removeToShare {
+  margin : 0 ;
+  width : 25px;
+  height : 25px;
+  float: right;
+  background-image: url(../src/images/cancel.png);
+  background-size: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#progressBar {
+  width: 100px;
+  height: 100px;
+}
+
+#progressBlock {
+  text-align: right;
+}
+
+#shareFiltering {
+  width: 150px;
+  margin-left : 82%;
+  align-items: right;
 }

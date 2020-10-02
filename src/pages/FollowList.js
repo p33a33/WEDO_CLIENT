@@ -9,10 +9,6 @@ class FollowList extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            followinfo: [
-                // { id: 1, user_id: 2, follow_id: 3, created_at: 2020 - 9 - 29 },
-                // { id: 4, user_id: 5, follow_id: 3, created_at: 2020 - 9 - 29 }
-            ], // user_fullname, user_nickname이 필요할 것 같아요! 상태메시지도 추가한다면 상태메시지도 같이! 만약 프로필사진도 추가한다면 같이!
             emailToAdd: null,
             isAddOpen: false
         }
@@ -21,16 +17,6 @@ class FollowList extends React.Component {
         this.handleAddFriend = this.handleAddFriend.bind(this)
         this.handleAddFriendOpen = this.handleAddFriendOpen.bind(this)
     }
-
-    componentDidMount = () => {
-        axios.get("http://localhost:5000/followlist")
-            .then(res => {
-                let followlist = res.data
-                this.setState({ followinfo: followlist })
-            })
-            .catch(e => console.log(e))
-    }
-
     handleNewFollowList = (list) => {
         this.setState({ followinfo: list })
     }
@@ -39,14 +25,10 @@ class FollowList extends React.Component {
         this.setState({ [key]: e.target.value });
     };
 
+
     handleAddFriend = () => {
         return axios.post(`http://localhost:5000/followAdd`, { friendemail: this.state.emailToAdd })
-            .then(res => {
-                let temp = this.state.followinfo;
-                let newFriend = res.data;
-                temp.push(newFriend)
-                this.setState({ followinfo: temp })
-            })
+            .then(res => { console.log(res.data); this.props.addNewFriend(res.data) })
     }
 
     handleAddFriendOpen = () => {
@@ -54,15 +36,16 @@ class FollowList extends React.Component {
     }
 
     render() {
-        let { followinfo, isAddOpen } = this.state
+        let { followinfo } = this.props
+        let { isAddOpen } = this.state
         return (
             <>
                 <div className="modal-mask" style={{ display: isAddOpen ? 'block' : 'none' }}>
                     <div className="modal-window">
-                        <form className="Form addFriend" onSubmit={(e) => e.defaultPrevented()}>
+                        <form className="Form addFriend" onSubmit={(e) => { e.preventDefault(); this.handleAddFriend(); }}>
                             <div className="Text">친구추가</div>
                             <input placeholder="친구 이메일 입력" onChange={this.handleInputValue("emailToAdd")}></input>
-                            <button type="submit" onClick={this.handleAddFriend}>추가하기</button>
+                            <button onClick={this.handleAddFriend}>추가하기</button>
                             <button onClick={this.handleAddFriendOpen}>취소</button>
                         </form>
                     </div>

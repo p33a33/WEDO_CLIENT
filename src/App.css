@@ -150,6 +150,18 @@ width : 350px;
   float: right;
   margin: 5px;
 }
+#shareButton-main {
+  border-radius: 100%;
+  width : 50px;
+  height : 50px;
+  /* background-image: url(../src/images/add3.png); */
+  background-color: #ffffff;
+  background-size: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 5px;
+}
 #cancelButton-main{
   border-radius: 100%;
   width : 50px;
@@ -191,6 +203,10 @@ width : 350px;
   margin : 0 auto;
   width: 500px;
   height : 400px;
+}
+.toLeft {
+  float: left;
+  margin-left: 50px;
 }
 .addForm input {
   border : 0;
@@ -515,4 +531,39 @@ ul {
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
+}
+
+#shareForm-main {
+  float : right;
+  width : 200px;
+}
+
+#shareForm-main input{
+  box-sizing: border-box;
+  float : right;
+  width : 250px;
+}
+
+#searchFriendList {
+  width : 100px;
+  min-height : 30px;
+  height: fit-content;
+  z-index: 1;
+  float: right;
+}
+
+#searchFriendList button{
+  margin : 5px auto;
+  width: 100px;
+}
+
+#shareTo {
+  position: relative;
+  border-radius: 15px;
+  box-sizing: border-box;
+  float: right;
+  margin-top: 30px;
+  width : 250px;
+  height : 250px;
+  border : black solid;
 }

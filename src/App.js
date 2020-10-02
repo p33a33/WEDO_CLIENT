@@ -18,7 +18,17 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: []
+      todos: [],
+      followinfo: [
+        { id: 1, user_id: 2, follow_id: 3, fullname: '친구', created_at: 2020 - 9 - 29 },
+        { id: 2, user_id: 2, follow_id: 3, fullname: '친구2', created_at: 2020 - 9 - 29 },
+        { id: 3, user_id: 2, follow_id: 3, fullname: '친구3', created_at: 2020 - 9 - 29 },
+        { id: 4, user_id: 2, follow_id: 3, fullname: '친구4', created_at: 2020 - 9 - 29 },
+        { id: 5, user_id: 2, follow_id: 3, fullname: '심규공', created_at: 2020 - 9 - 29 },
+        { id: 6, user_id: 2, follow_id: 3, fullname: '김광혁', created_at: 2020 - 9 - 29 },
+        { id: 7, user_id: 2, follow_id: 3, fullname: '김은혜', created_at: 2020 - 9 - 29 },
+        // { id: 4, user_id: 5, follow_id: 3, created_at: 2020 - 9 - 29 }
+      ], // user_fullname, user_nickname이 필요할 것 같아요! 상태메시지도 추가한다면 상태메시지도 같이! 만약 프로필사진도 추가한다면 같이!
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
@@ -26,6 +36,8 @@ class App extends React.Component {
     this.handleEditedData = this.handleEditedData.bind(this)
     this.handleFetchTodo = this.handleFetchTodo.bind(this)
     this.handleAddTodo = this.handleAddTodo.bind(this)
+    this.getFriendsList = this.getFriendsList.bind(this)
+    this.addNewFriend = this.addNewFriend.bind(this)
   }
 
   handleisSigninChange() {
@@ -52,16 +64,32 @@ class App extends React.Component {
   handleAddTodo(data) {
     let temp = this.state.todos
     temp.push(data)
-
     this.setState({
       todos: temp
     })
   }
+  getFriendsList() {
+    axios.get("http://localhost:5000/followlist")
+      .then(res => {
+        let followlist = res.data
+        this.setState({ followinfo: followlist })
+      })
+      .catch(e => console.log(e))
+  }
+
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
       .post("http://localhost:5000/signout")
       .catch(e => console.log(e))
+  }
+
+  addNewFriend = (user) => {
+    let temp = this.state.followinfo
+    temp.push(user)
+    this.setState({
+      followinfo: temp
+    })
   }
 
   passwordValidationCheck = (pw) => { // signup과 mypage에서 공통적으로 사용되는 method이기 때문에, app에서 props로 내려주도록 했습니다.
@@ -113,12 +141,12 @@ class App extends React.Component {
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} followinfo={followinfo} />}
             />
             <Route
               exact
               path="/followlist"
-              render={() => <FollowList userinfo={userinfo} isSignin={isSignin} handleSignout={this.handleSignout} history={useHistory} followinfo={followinfo} han />}
+              render={() => <FollowList userinfo={userinfo} isSignin={isSignin} addNewFriend={this.addNewFriend} handleSignout={this.handleSignout} history={useHistory} followinfo={followinfo} />}
             />
             <Route
               path="/"

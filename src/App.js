@@ -18,16 +18,15 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [],
+      todos: [{ title: 123, body: 1234, isClear: false }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }],
       followinfo: [
         { id: 1, user_id: 2, follow_id: 3, fullname: '친구', created_at: 2020 - 9 - 29 },
-        { id: 2, user_id: 2, follow_id: 3, fullname: '친구2', created_at: 2020 - 9 - 29 },
-        { id: 3, user_id: 2, follow_id: 3, fullname: '친구3', created_at: 2020 - 9 - 29 },
-        { id: 4, user_id: 2, follow_id: 3, fullname: '친구4', created_at: 2020 - 9 - 29 },
-        { id: 5, user_id: 2, follow_id: 3, fullname: '심규공', created_at: 2020 - 9 - 29 },
-        { id: 6, user_id: 2, follow_id: 3, fullname: '김광혁', created_at: 2020 - 9 - 29 },
-        { id: 7, user_id: 2, follow_id: 3, fullname: '김은혜', created_at: 2020 - 9 - 29 },
-        // { id: 4, user_id: 5, follow_id: 3, created_at: 2020 - 9 - 29 }
+        { id: 2, user_id: 3, follow_id: 3, fullname: '친구2', created_at: 2020 - 9 - 29 },
+        { id: 3, user_id: 4, follow_id: 3, fullname: '친구3', created_at: 2020 - 9 - 29 },
+        { id: 4, user_id: 5, follow_id: 3, fullname: '친구4', created_at: 2020 - 9 - 29 },
+        { id: 5, user_id: 6, follow_id: 3, fullname: '심규공', created_at: 2020 - 9 - 29 },
+        { id: 6, user_id: 7, follow_id: 3, fullname: '김광혁', created_at: 2020 - 9 - 29 },
+        { id: 7, user_id: 8, follow_id: 3, fullname: '김은혜', created_at: 2020 - 9 - 29 },
       ], // user_fullname, user_nickname이 필요할 것 같아요! 상태메시지도 추가한다면 상태메시지도 같이! 만약 프로필사진도 추가한다면 같이!
     };
     this.handleisSigninChange = this.handleisSigninChange.bind(this);

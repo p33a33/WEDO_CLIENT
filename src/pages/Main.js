@@ -4,6 +4,8 @@ import axios from 'axios'
 import { render } from 'react-dom';
 import TodoEntry from "./TodoEntry"
 import { Motion, spring } from "react-motion"
+import { Circle } from "rc-progress"
+
 class Main extends React.Component {
     constructor() {
         super()
@@ -30,6 +32,7 @@ class Main extends React.Component {
         this.handleSearchFriend = this.handleSearchFriend.bind(this)
         this.handleIsShareOpen = this.handleIsShareOpen.bind(this)
         this.handleAddShareTo = this.handleAddShareTo.bind(this)
+        this.handleRemoveShareTo = this.handleRemoveShareTo.bind(this)
     }
     componentDidMount() {
         this.getWeather()
@@ -106,12 +109,39 @@ class Main extends React.Component {
         }
     }
 
+    handleRemoveShareTo = (e) => { // 공유할 친구 리스트에서 친구를 제거합니다.
+        let userid = e.target.getAttribute('userid')
+        let temp = this.state.shareTo
+        console.log('this is target id', userid)
+        console.log('this is target temp', temp)
+        for (let i = 0; i < temp.length; i++) {
+            if (temp[i][0] === userid) {
+                let front = temp.slice(0, i)
+                console.log('this is front', front)
+                let tail = temp.slice(i + 1, temp.length)
+                console.log('this is tail', tail)
+                temp = front.concat(tail)
+                console.log('this is after temp', temp)
+            }
+        }
+        this.setState({ shareTo: temp })
+    }
+
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleAdd = () => {
-        const { title, body } = this.state
+        const { title, body, shareTo } = this.state
         if (title && body) {
             axios.post("http://localhost:5000/todowrite", { title, body })
-                .then(res => this.props.handleAddTodo(res.data))
+                .then(res => { this.props.handleAddTodo(res.data); return res.data })
+                .then(data => {
+                    if (shareTo.length > 0) {
+                        for (let user of shareTo) {
+                            axios.post("http://localhost:5000/sharetodo", { todoid: data.id, friendid: Number(user[0]) })
+                                .then(res => console.log(res))
+                                .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) })
+                        }
+                    }
+                })
                 .then(() => this.handleAddOpen())
                 .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) });
         }
@@ -121,7 +151,18 @@ class Main extends React.Component {
     }
     handleAddOpen = () => {
         this.setState({ isAddOpen: !this.state.isAddOpen })
-        console.log(this)
+    }
+
+    getProgress = () => {
+        let alltodos = this.props.todos.length
+        let counter = 0;
+
+        for (let todo of this.props.todos) {
+            if (todo.isClear) {
+                counter = counter + 1
+            }
+        }
+        return { todos: alltodos, clear: counter, progress: (counter / alltodos * 100) }
     }
 
     resetForm() {
@@ -164,16 +205,26 @@ class Main extends React.Component {
                         </div>
                     </div>
                     <div className="textbox">
-                        <div className="Text Sayhi">
-                            {this.state.current === "morning" ? <div> 안녕하세요! <br></br> 좋은 아침이에요</div>
-                                : this.state.current === "afternoon" ? <div> 피곤하시죠? <br></br>
-                                    <a href="https://www.google.com/search?source=hp&ei=AL5yX4fHF4i2mAWf75vACA&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&oq=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&gs_lcp=CgZwc3ktYWIQAzIFCAAQsQMyBQgAELEDMgUIABCxAzICCAAyBQgAELEDMgIIADICCAAyAggAMgIIADICCAA6CAgAELEDEIMBOgQIABAKUPACWO8VYJ8XaAhwAHgDgAFviAHoCZIBBDAuMTKYAQCgAQGqAQdnd3Mtd2l6sAEA&sclient=psy-ab&ved=0ahUKEwiHx8WdyY3sAhUIG6YKHZ_3BogQ4dUDCAc&uact=5">
-                                        커피 한 잔 어때요?</a></div>
-                                    : <div>오늘도 고생하셨어요<br></br> 좋은 밤 되세요 </div>}
+                        <Motion defaultStyle={{ opacity: 0 }}
+                            style={{ opacity: spring(1) }}>
+                            {(style) => (<div style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }} className="Text Sayhi" >
+                                <div >
+                                    {this.state.current === "morning" ? <div> 안녕하세요! <br></br> 좋은 아침이에요</div>
+                                        : this.state.current === "afternoon" ? <div> 피곤하시죠? <br></br>
+                                            <a href="https://www.google.com/search?source=hp&ei=AL5yX4fHF4i2mAWf75vACA&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&oq=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&gs_lcp=CgZwc3ktYWIQAzIFCAAQsQMyBQgAELEDMgUIABCxAzICCAAyBQgAELEDMgIIADICCAAyAggAMgIIADICCAA6CAgAELEDEIMBOgQIABAKUPACWO8VYJ8XaAhwAHgDgAFviAHoCZIBBDAuMTKYAQCgAQGqAQdnd3Mtd2l6sAEA&sclient=psy-ab&ved=0ahUKEwiHx8WdyY3sAhUIG6YKHZ_3BogQ4dUDCAc&uact=5">
+                                                커피 한 잔 어때요?</a></div>
+                                            : <div>오늘도 고생하셨어요<br></br> 좋은 밤 되세요 </div>}
+                                </div>
+                            </div>)}
+                        </Motion>
+                        <div id="progressBlock">
+                            <div><Circle id="progressBar" percent={this.getProgress().progress} strokeWidth="5" strokeColor={{ '100%': '#108ee9', '0%': '#87d068' }} onClick={this.getProgress} /></div>
+                            <div> {this.getProgress().todos}개 중 {this.getProgress().clear}개 완료했습니다. </div>
                         </div>
                         <div className="todoListTitle">
                             TODO LIST
                         </div>
+                        <div><button id="shareFiltering">공유 Todo만 보기</button></div>
                         <button id="addButton" onClick={this.handleAddOpen} style={{ display: isAddOpen ? "none" : "block" }}>추가하기</button> {/*  Add가 열리면 Add 버튼을 숨깁니다. */} {/* TodoEntry가 렌더되는 부분입니다*/}
                         <div className="add-todo" style={{ display: isAddOpen ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
                             <form className={isShareOpen ? "addForm toLeft" : "addForm"} onSubmit={(e) => { e.preventDefault(); this.handleAdd(); this.resetForm(); }} >
@@ -182,7 +233,7 @@ class Main extends React.Component {
                                 <span className="editFormButtons">
                                     <button id="cancelButton-main" type="reset" onClick={this.handleAddOpen}></button>
                                     <button id="editOkay-main" type="submit"></button>
-                                    <button id="shareButton-main" type="button" onClick={this.handleIsShareOpen}> Share </button> {/* todo Add와 동시에 Share 할 수 있는 기능 구현*/}
+                                    <button id={isShareOpen ? "shareButton-main-Active" : "shareButton-main"} type="button" onClick={this.handleIsShareOpen}> Share </button> {/* todo Add와 동시에 Share 할 수 있는 기능 구현*/}
                                 </span>
                             </form>
                             <div className="addForm" id="shareForm-main" style={{ display: isShareOpen ? "" : "none" }}>
@@ -194,10 +245,14 @@ class Main extends React.Component {
                                                 {val[1]}
                                             </button>) : ''}
                                 </div>
-                                <div id="shareTo"> 선택된 친구리스트
-                                <ul>
-                                        {shareTo.map(friend => <li key={friend[0]}>{friend[1]}</li>)}
-                                    </ul>
+                                <div id="shareTo">
+                                    {shareTo.map(friend =>
+                                        <div key={friend[0]}>
+                                            <div className="searchFriendEntry" >
+                                                {friend[1]}
+                                                <button userid={friend[0]} id="removeToShare" onClick={(e) => this.handleRemoveShareTo(e)} />
+                                            </div>
+                                        </div>)}
                                 </div>
                             </div>
                         </div>

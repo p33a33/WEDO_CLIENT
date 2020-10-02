@@ -4,22 +4,27 @@ import axios from 'axios'
 import { render } from 'react-dom';
 import { Motion, spring } from "react-motion"
 
-export default function FollowEntry(props) {
+export default class FollowEntry extends React.Component {
+    constructor(props) {
+        super();
+        this.handleUnfollow = this.handleUnfollow.bind(this)
+    }
 
-    let handleUnfollow = () => {
-        axios.post(`http://localhost:5000/followdelete`, { friendid: props.follower.user_id })
+    handleUnfollow = () => {
+        axios.post(`http://localhost:5000/followdelete`, { friendid: this.props.follower.id })
             .then(res => {
-                let newList = res.data
-                console.log(data);
-                props.handleNewFollowList(newList)
+                let newList = res.data.friend
+                this.props.handleNewFollowList(newList)
             })
     }
-    return (
-        <li className="follower">
-            <div className="followerbox">
-                <div className="entry name">{props.follower.user_id}</div>
-                <div className="entry email">p33a33@naver.com</div>
-                <button className="entry button" onClick={handleUnfollow}></button>
-            </div>
-        </li>)
+    render() {
+        return (
+            <li className="follower" >
+                <div className="followerbox">
+                    <div className="entry name">{this.props.follower.nickname}</div>
+                    <div className="entry email">{this.props.follower.email}</div>
+                    <button className="entry button" onClick={this.handleUnfollow}></button>
+                </div>
+            </li>)
+    }
 }

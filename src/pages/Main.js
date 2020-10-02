@@ -37,6 +37,9 @@ class Main extends React.Component {
     componentDidMount() {
         this.getWeather()
         setInterval(this.getTime, 1000)
+
+        axios.get(`http://localhost:5000/main`)
+            .then(res => this.props.handleFetchTodo(res.data))
     }
 
     handleSearchFriend = (e) => { //  Todo Add 시 친구 찾기 input을 통해 친구를 검색합니다.
@@ -158,7 +161,7 @@ class Main extends React.Component {
         let counter = 0;
 
         for (let todo of this.props.todos) {
-            if (todo.isClear) {
+            if (todo.isclear) {
                 counter = counter + 1
             }
         }
@@ -218,7 +221,7 @@ class Main extends React.Component {
                             </div>)}
                         </Motion>
                         <div id="progressBlock">
-                            <div><Circle id="progressBar" percent={this.getProgress().progress} strokeWidth="5" strokeColor={{ '100%': '#108ee9', '0%': '#87d068' }} onClick={this.getProgress} /></div>
+                            <div><Circle id="progressBar" percent={this.getProgress().progress} strokeWidth="10" strokeColor={{ '100%': '#108ee9', '0%': '#87d068' }} onClick={this.getProgress} /></div>
                             <div> {this.getProgress().todos}개 중 {this.getProgress().clear}개 완료했습니다. </div>
                         </div>
                         <div className="todoListTitle">
@@ -231,7 +234,7 @@ class Main extends React.Component {
                                 <div><input type="title" id="titleInput" placeholder="제목" onChange={this.handleInputValue("title")} /></div>
                                 <div><textarea type="body" id="bodyInput" placeholder="내용" onChange={this.handleInputValue("body")} /></div>
                                 <span className="editFormButtons">
-                                    <button id="cancelButton-main" type="reset" onClick={this.handleAddOpen}></button>
+                                    <button className="cancelButton-main" type="reset" onClick={this.handleAddOpen}></button>
                                     <button id="editOkay-main" type="submit"></button>
                                     <button id={isShareOpen ? "shareButton-main-Active" : "shareButton-main"} type="button" onClick={this.handleIsShareOpen}> Share </button> {/* todo Add와 동시에 Share 할 수 있는 기능 구현*/}
                                 </span>

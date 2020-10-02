@@ -8,6 +8,7 @@ class Mypage extends React.Component {
         super();
         this.state = {
             nickname: "",
+            oldPassword: "",
             newPassword: "",
             checkNewPassword: "",
         }
@@ -57,7 +58,8 @@ class Mypage extends React.Component {
                             else {
                                 return axios
                                     .post("http://localhost:5000/signeditpassword", {
-                                        password: this.state.newPassword
+                                        newpassword: this.state.newPassword,
+                                        oldpassword: this.state.oldPassword
                                     })
                                     .then(() => {
                                         alert("비밀번호가 성공적으로 변경되었습니다.");
@@ -70,7 +72,7 @@ class Mypage extends React.Component {
                         }}>
 
                         <h2>비밀번호 변경</h2>
-                        <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("curPassword")}></input>
+                        <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("oldPassword")}></input>
                         <div><input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input></div>
                         <div><input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input></div>{/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
 

@@ -10,34 +10,48 @@ class FollowList extends React.Component {
         super();
         this.state = {
             emailToAdd: null,
-            isAddOpen: false
+            isAddOpen: false,
+            followlist: []
         }
         this.handleNewFollowList = this.handleNewFollowList.bind(this)
         this.handleInputValue = this.handleInputValue.bind(this)
         this.handleAddFriend = this.handleAddFriend.bind(this)
         this.handleAddFriendOpen = this.handleAddFriendOpen.bind(this)
     }
+
+    componentDidMount() {
+        axios.get(`http://localhost:5000/followlist`)
+            .then(res => {
+                console.log(res)
+                this.setState({ followlist: res.data.friend })
+            })
+    }
+
     handleNewFollowList = (list) => {
-        this.setState({ followinfo: list })
+        this.setState({ followlist: list })
     }
 
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     };
 
-
     handleAddFriend = () => {
         return axios.post(`http://localhost:5000/followAdd`, { friendemail: this.state.emailToAdd })
-            .then(res => { console.log(res.data); this.props.addNewFriend(res.data) })
+            .then(res => {
+                console.log(res)
+                axios.get('http://localhost:5000/followlist')
+                    .then(res => this.handleNewFollowList(res.data.friend))
+            })
     }
+
 
     handleAddFriendOpen = () => {
         this.setState({ isAddOpen: !this.state.isAddOpen })
     }
 
     render() {
-        let { followinfo } = this.props
-        let { isAddOpen } = this.state
+        // let { followinfo } = this.props
+        let { isAddOpen, followlist } = this.state
         return (
             <>
                 <div className="modal-mask" style={{ display: isAddOpen ? 'block' : 'none' }}>
@@ -59,8 +73,8 @@ class FollowList extends React.Component {
                     </div>
                     <div className="Text followlistbox"> 친구목록
                 <ul>
-                            {followinfo.length ?
-                                followinfo.map(follower => <FollowEntry follower={follower} handleNewFollowList={this.handleNewFollowList} />)
+                            {followlist.length ?
+                                followlist.map(follower => <FollowEntry follower={follower} handleNewFollowList={this.handleNewFollowList} />)
                                 : <div id="noFriends">음..... 친구가 없을수도 있다고 생각해요. <br></br>괜찮아요, 저도 많이 없거든요</div>}
                         </ul>
                     </div>

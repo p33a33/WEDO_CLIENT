@@ -34,7 +34,7 @@ class TodoEntry extends React.Component {
     }
     handleClear = () => {
         const data = { id: this.props.todo.id }
-        axios.post("http://localhost:5000/clear", data)
+        axios.post("http://localhost:5000/todoclear", data)
             .then((res) => { this.props.handleEditedData(res.data); console.log(res) })
             .catch((e) => console.log(e))
     }
@@ -70,16 +70,15 @@ class TodoEntry extends React.Component {
                     <input defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span className="editFormButtons">
-                        <button type="button" id="deleteButton" onClick={this.handleDelete}></button>
-                        <button type="submit" id="editOkay"></button>
-                        <button type="button" id="cancelButton" onClick={this.handleModifyOpen}></button>
+                        <button type="button" className="deleteButton" onClick={this.handleDelete}></button>
+                        <button type="submit" className="editOkay"></button>
+                        <button type="button" className="cancelButton" onClick={this.handleModifyOpen}></button>
                     </span>
                 </form>
                 <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
                     <div className="todo-title">
                         <span className="editFormButtons">
-                            <button id={isclear ? "done" : "yet"} onClick={() => { this.handleClear }}></button>
-                            {/*<button id={this.state.isclear ? "done" : "yet"} onClick={() => { console.log(this); this.handleClearforClient() }}></button>*/}
+                            <button id={isclear ? "done" : "yet"} onClick={() => { this.handleClear() }}></button>
                             <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}></button>
                         </span>
                         <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>

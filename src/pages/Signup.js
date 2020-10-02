@@ -42,7 +42,7 @@ export default class Signup extends React.Component {
                     axios.post(`http://localhost:5000/signup`, { email, password, fullname, nickname })
                         .then(res => {
                             console.log(res)
-                            if (res.status === 200) {
+                            if (res.status === 201) {
                                 this.setState({
                                     hasSignedup: true
                                 })

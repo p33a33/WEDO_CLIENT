@@ -88,7 +88,7 @@ button {
   background: #eef4fa;
   box-shadow: -3.92441px -3.92441px 14.6509px #F9FBFD, 5.23254px 5.23254px 10.4651px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
-color : #3c3cdb;
+color : #665fc0;
 font-size: 15px;
 font-weight: bold;
 }
@@ -98,18 +98,40 @@ button:hover {
 button:active {
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }
+.headerText{
+  text-align: center; 
+  font-weight: bold;
+  font-size: 35px;
+  letter-spacing: -2px;
+  padding-top: 20px;
+  margin-bottom: -20px;
+  background : linear-gradient(45deg,  #FC5C7D 0%, #6A82FB 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .Signup{
   width : 350px;
   height: 100vh;
   margin : 10% auto;
+  background : linear-gradient(45deg,  #FC5C7D 0%, #6A82FB 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 23px;
+  padding: 5px;
 }
 .Signup button{
 margin-top : 50px;
 width : 350px;
 }
+.signupButtons button{
+  font-size: 18px;
+  font-weight: bold;
+}
 .signInput{
   margin-left : auto;
-  margin-bottom : 5px
+  margin-bottom : 15px
   }
 .pagebox h1{
   text-align: center;
@@ -176,7 +198,7 @@ width : 350px;
   float: right;
   margin: 5px;
 }
-#cancelButton-main{
+.editFormButtons .cancelButton-main{
   border-radius: 100%;
   width : 50px;
   height : 50px;
@@ -423,12 +445,14 @@ width : 350px;
   background-color: #eef4fa;
   margin-left : 20px;
 }
+
 #xkfxhl{
   margin-top:100px;
   width : 350px;
   height : 50px;
 }
-#addButton{
+
+.addButton{
   background: linear-gradient(125deg,  #8ec8f8 0%,#86A8E7 50%, #7070cf 100%);
   color: white;
   font-weight: bold;
@@ -438,8 +462,10 @@ width : 350px;
   margin-bottom: 10px;
   margin-left: 20px;
   float: left;
+  -webkit-text-fill-color: white;
 }
-#addButtons-main{
+
+.addButtons-main{
   margin-left: 220px;
   height: 70px;
 }
@@ -612,17 +638,26 @@ ul {
   height : 250px;
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }
-
+#shareButton-main {
+  border-radius: 100%;
+  width : 50px;
+  height : 50px;
+  background-image: url(../src/images/addUser.png); 
+  background-size: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  margin: 5px;
+}
 #shareButton-main-Active{ /* share 상태 on */
   border-radius: 100%;
   width : 50px;
   height : 50px;
-  /* background-image: url(../src/images/add3.png); */
-  background-color: #ffffff;
-  background-size: 30px;
+ background-image: url(../src/images/addUser.png); 
+  background-size: 35px;
   background-position: center;
   background-repeat: no-repeat;
-  float: right;
+  float: left;
   margin: 5px;
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }

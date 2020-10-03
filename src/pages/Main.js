@@ -228,9 +228,9 @@ class Main extends React.Component {
                         <div className="todoListTitle">
                             TODO LIST
                         </div>
-                        <div id="addButtons-main">
-                            <button id="addButton" onClick={this.handleAddOpen} style={{ display: isAddOpen ? "none" : "block" }}>추가하기</button>
-                            <button id="addButton">공유 Todo만 보기</button>
+                        <div className="addButtons-main">
+                            <button className="addButton" onClick={this.handleAddOpen} style={{ display: isAddOpen ? "none" : "block" }}>추가하기</button>
+                            <button className="addButton" style={{ display: isAddOpen ? "none" : "block" }}>공유 Todo만 보기</button>
                         </div> {/*  Add가 열리면 Add 버튼을 숨깁니다. */} {/* TodoEntry가 렌더되는 부분입니다*/}
                         <div className="add-todo" style={{ display: isAddOpen ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
                             <form className={isShareOpen ? "addForm toLeft" : "addForm"} onSubmit={(e) => { e.preventDefault(); this.handleAdd(); this.resetForm(); }} >
@@ -239,7 +239,7 @@ class Main extends React.Component {
                                 <span className="editFormButtons">
                                     <button className="cancelButton-main" type="reset" onClick={this.handleAddOpen}></button>
                                     <button id="editOkay-main" type="submit"></button>
-                                    <button id={isShareOpen ? "shareButton-main-Active" : "shareButton-main"} type="button" onClick={this.handleIsShareOpen}> Share </button> {/* todo Add와 동시에 Share 할 수 있는 기능 구현*/}
+                                    <button id={isShareOpen ? "shareButton-main-Active" : "shareButton-main"} type="button" onClick={this.handleIsShareOpen}></button> {/* todo Add와 동시에 Share 할 수 있는 기능 구현*/}
                                 </span>
                             </form>
                             <div className="addForm" id="shareForm-main" style={{ display: isShareOpen ? "" : "none" }}>

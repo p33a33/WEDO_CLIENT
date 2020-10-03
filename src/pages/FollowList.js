@@ -57,9 +57,9 @@ class FollowList extends React.Component {
                 <div className="modal-mask" style={{ display: isAddOpen ? 'block' : 'none' }}>
                     <div className="modal-window">
                         <form className="Form addFriend" onSubmit={(e) => { e.preventDefault(); this.handleAddFriend(); }}>
-                            <div className="Text">친구추가</div>
+                            <div className="headerText">친구추가</div>
                             <input placeholder="친구 이메일 입력" onChange={this.handleInputValue("emailToAdd")}></input>
-                            <button onClick={this.handleAddFriend}>추가하기</button>
+                            <button style={{ marginTop: "80px" }} onClick={this.handleAddFriend}>추가하기</button>
                             <button onClick={this.handleAddFriendOpen}>취소</button>
                         </form>
                     </div>
@@ -71,15 +71,17 @@ class FollowList extends React.Component {
                         <button id='gotomain' onClick={() => { this.props.history.push('/main') }}>Todo List</button>
                         <button id='addfollow' onClick={this.handleAddFriendOpen} >친구추가</button>
                     </div>
-                    <div className="Text followlistbox"> 친구목록
-                <ul>
+
+                    <ul>
+                        <div className="headerText" style={{ marginTop: "70px" }}> 친구목록
                             {followlist.length ?
                                 followlist.map(follower => <FollowEntry follower={follower} handleNewFollowList={this.handleNewFollowList} />)
                                 : <div id="noFriends">음..... 친구가 없을수도 있다고 생각해요. <br></br>괜찮아요, 저도 많이 없거든요</div>}
-                        </ul>
-                    </div>
-
+                        </div>
+                    </ul>
                 </div>
+
+
             </>
         )
     }

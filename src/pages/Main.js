@@ -4,7 +4,7 @@ import axios from 'axios'
 import { render } from 'react-dom';
 import TodoEntry from "./TodoEntry"
 import { Motion, spring } from "react-motion"
-import { Circle } from "rc-progress"
+import { Circle, Line } from "rc-progress"
 
 class Main extends React.Component {
     constructor() {
@@ -74,9 +74,9 @@ class Main extends React.Component {
         let time = {}
         let hours = day.getHours()
         let str = day.toLocaleTimeString().split(':')
-        if (hours <= 11) {
+        if (hours >= 5) {
             this.setState({ current: "morning" })
-        } else if (hours <= 17) {
+        } else if (hours >= 11 && hours <= 17) {
             this.setState({ current: "afternoon" })
         } else {
             this.setState({ current: "evening" })
@@ -197,18 +197,11 @@ class Main extends React.Component {
                         <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
                             <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`} className="weatherImage" />
                             <div className="currentTemp">
-                                서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p>
+                                서울<br></br><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b>
                             </div>
                         </div>
                         <div className="currentTime-main" >
-                            현재 시각
-                        <p>
-                                <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
-                            </p>
-                        </div>
-                        <div id="progressBlock">
-                            <div><Circle id="progressBar" percent={this.getProgress().progress} strokeWidth="8" strokeColor={{ '100%': '#A770EF', '60%': '#CF8BF3', '0%': '#FED1BD' }} onClick={this.getProgress} /></div>
-                            <div id="progressText"> <b>{this.getProgress().todos}개</b> 중 <b>{this.getProgress().clear}개</b> <p>완료했습니다.</p> </div>
+                            현재 시각 <b>{this.state.currentTime.hour}시 {this.state.currentTime.minutes}분</b>
                         </div>
                     </div>
 
@@ -216,21 +209,25 @@ class Main extends React.Component {
                         style={{ opacity: spring(1) }}>
                         {(style) => (<div style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }} className="Text Sayhi" >
                             <div>
-                                {this.state.current === "morning" ? <div> 안녕하세요! <br></br> 좋은 아침이에요</div>
+                                {this.state.current === "morning" ? <div> 안녕하세요! <br></br> 좋은 아침이에요.</div>
                                     : this.state.current === "afternoon" ? <div> 피곤하시죠? <br></br>
                                         <a href="https://www.google.com/search?source=hp&ei=AL5yX4fHF4i2mAWf75vACA&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&oq=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&gs_lcp=CgZwc3ktYWIQAzIFCAAQsQMyBQgAELEDMgUIABCxAzICCAAyBQgAELEDMgIIADICCAAyAggAMgIIADICCAA6CAgAELEDEIMBOgQIABAKUPACWO8VYJ8XaAhwAHgDgAFviAHoCZIBBDAuMTKYAQCgAQGqAQdnd3Mtd2l6sAEA&sclient=psy-ab&ved=0ahUKEwiHx8WdyY3sAhUIG6YKHZ_3BogQ4dUDCAc&uact=5">
                                             커피 한 잔 어때요?</a></div>
-                                        : <div>오늘도 고생하셨어요<br></br> 좋은 밤 되세요 </div>}
+                                        : <div>오늘도 고생하셨어요.<br></br> 좋은 밤 되세요.</div>}
                             </div>
                         </div>)}
                     </Motion>
+                    <div id="progressBlock">
+                        <Line style={{ width: "500px", marginRight: "30px" }} percent={this.getProgress().progress} strokeWidth="2" strokeColor='#A770EF' />
+                        <div id="progressText"> <b>{this.getProgress().todos}개</b> 중 <b>{this.getProgress().clear}개</b> 완료했습니다.</div>
+                    </div>
                     <div className="textbox">
                         <div className="todoListTitle">
                             TODO LIST
                         </div>
                         <div className="addButtons-main">
                             <button className="addButton" onClick={this.handleAddOpen} style={{ display: isAddOpen ? "none" : "block" }}>추가하기</button>
-                            <button className="addButton" style={{ display: isAddOpen ? "none" : "block" }}>공유 Todo만 보기</button>
+                            <button className="addButton" style={{ display: isAddOpen ? "none" : "block" }}>공유중인 Todo</button>
                         </div> {/*  Add가 열리면 Add 버튼을 숨깁니다. */} {/* TodoEntry가 렌더되는 부분입니다*/}
                         <div className="add-todo" style={{ display: isAddOpen ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
                             <form className={isShareOpen ? "addForm toLeft" : "addForm"} onSubmit={(e) => { e.preventDefault(); this.handleAdd(); this.resetForm(); }} >

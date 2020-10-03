@@ -23,21 +23,19 @@ color: black;
   margin: 2% auto;
   width: 925px;
   min-height: 1350px;
-height: fit-content;
-}
+  height:fit-content;
+} 
 .textbox{
-  margin-right: 20px;
-  margin-top: 10px;
+ margin: 0 auto;
   top: 20px;
   position: relative;
-  float: right;
   width: 845px;
-  height: 200px;
+  height: 300px;
   display : table;
   vertical-align: middle;
 }
 .Sayhi{
-  margin-top: -280px;
+  margin-top: 50px;
   padding: 20px;
   font-size: 85px;
   text-align: left;
@@ -45,7 +43,7 @@ height: fit-content;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -5px;
-  line-height: 70px;
+  line-height: 80px;
 }
 .Signin {
   position: relative;
@@ -85,12 +83,11 @@ button {
   box-sizing: border-box;
   height: 36px;
   width: 350px;
-  background: #eef4fa;
   box-shadow: -3.92441px -3.92441px 14.6509px #F9FBFD, 5.23254px 5.23254px 10.4651px rgba(0, 0, 0, 0.25);
-border-radius: 10px;
-color : #665fc0;
-font-size: 15px;
-font-weight: bold;
+  border-radius: 10px;
+  color : #665fc0;
+  font-size: 15px;
+  font-weight: bold;
 }
 button:hover {
   background-color : #cbd6e0d8;
@@ -144,18 +141,16 @@ width : 350px;
 .todoListTitle{
   font-size: 25px;
   text-align: left;
-  margin-left: 30px;
   padding: 40px;
   background : linear-gradient(140deg,  #8ec8f8 0%,#86A8E7 20%, #3c3cdb 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .currentTime-main{
-  font-size: 35px;
+  font-size: 20px;
   text-align: right;
-  line-height:10%;
-  margin-top:-15px;
-  padding: 20px 20px 0px 0px;
+  margin-top:-40px;
+  padding: 0px 20px 0px 0px;
   float: right;
   background : linear-gradient(45deg,  #FC5C7D 0%, #6A82FB 100%);
   background-clip: text;
@@ -165,6 +160,7 @@ width : 350px;
   text-align: right;
 }
 .add-todo{
+  margin-top: -60px;
   height : 400px;
 }
 .itm-modify-btn {
@@ -276,7 +272,8 @@ width : 350px;
   border-radius: 10px;
 }
 .todo-title{
-  margin-left: 40px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .todo-title h2{
   margin-left: -25px;
@@ -290,7 +287,6 @@ width : 350px;
 }
 .todo-entry{
   padding : 2px;
-  
 }
 .todo-body {
   margin-left: 15px;
@@ -326,7 +322,11 @@ width : 350px;
   margin-left : 5%;
   border-radius: 100%;
   box-shadow: 2px 4px 4px rgba(121, 120, 120, 0.25), inset 2px 4px 4px rgba(255, 255, 255, 0.25);
-  text-shadow:-0.5px 0.5px 2px #868686bc, 1.5px 1.5px 1.5px #808080e7;
+}
+.weatherInfo-night .currentTemp{
+  background : linear-gradient(0deg,  #FC5C7D 0%, #6A82FB 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .weatherInfo-day {
   color: #E3EDF7;
@@ -347,10 +347,11 @@ width : 350px;
 .currentTemp {
   height: 100px;
   width: 300px;
-  margin-top: -80px;
+  padding-top: 10px;
+  line-height: 95%;
+  margin-top: -105px;
   margin-left: 115px;
   text-align: left;
-  line-height: 10%;
   font-size: 30px;
   color: #ffffff;
 }
@@ -445,7 +446,9 @@ width : 350px;
   background-color: #eef4fa;
   margin-left : 20px;
 }
-
+#edit-logout{
+  margin-right: 20px;
+}
 #xkfxhl{
   margin-top:100px;
   width : 350px;
@@ -466,8 +469,11 @@ width : 350px;
 }
 
 .addButtons-main{
-  margin-left: 220px;
+  margin-left: 490px;
   height: 70px;
+}
+.addButtons-main button{
+  width: 140px;
 }
 
 #noFriends {
@@ -693,11 +699,10 @@ ul {
 #progressBar {
   padding-top: 25px;
   padding-bottom:10px;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 10px;
 }
 #progressBlock {
-  margin-top:130px;
   text-align: right;
   background : linear-gradient(140deg,  #d18ef8 70%,#9886e7 78%, #3c3cdb 100%);
   background-clip: text;
@@ -705,10 +710,11 @@ ul {
   font-size: 28px;
 }
 #progressText{
-  padding-right: 25px;
+  font-size: 20px;
+  letter-spacing: -10%;
+  padding-right: 30px;
   padding-bottom:20px;
-  line-height: 5px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 #shareFiltering {
   width: 150px;

@@ -67,7 +67,7 @@ class TodoEntry extends React.Component {
         return (
             <div>
                 <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
-                    <input defaultValue={title} onChange={this.handleInputValue("title")} />
+                    <input style={{ marginTop: '20px' }} defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span className="editFormButtons">
                         <button type="button" className="deleteButton" onClick={this.handleDelete}></button>

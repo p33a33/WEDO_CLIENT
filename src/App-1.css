@@ -473,6 +473,7 @@ width : 350px;
 #noFriends {
   margin-top : 370px;
   letter-spacing: -2px;
+  font-size: 85%;
 }
 
 .followlistbox {
@@ -498,20 +499,20 @@ width : 350px;
 
 .entry{
   margin-top: 15px;
-  font-size: 20px;
+  font-size: 22px;
   border : 0;
   box-sizing: border-box;
   padding : 10px 0;
   padding-left : 10px;
-  background:  #eef4fa;
   height: 50px;
   border-radius: 10px;
 }
 .followerbox {
   margin : 30px auto;
+  height: 70px;
 }
 .follower .name{
-  margin-left : 20px;
+  margin-left : -60px;
   text-align: center;
   width : 250px;
   float : left;
@@ -520,16 +521,18 @@ width : 350px;
 .follower .email {
   text-align: center;
   width : 350px;
-  margin-left : 40px;
   float: left;
 }
 
 .follower .button {
   width : 50px;
-  margin-left : 40px;
-  float : left;
+  height:50px;
+  float : right;
+  margin: 9px auto;
+  margin-right: 30px;
+  border-radius: 100%;
   background-image: url(../src/images/deleteUser.png);
-  background-size: 35px;
+  background-size: 40px;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -570,6 +573,8 @@ ul {
 
 .addFriend button{
   margin-top : 30px;
+  background: linear-gradient(125deg,  #8ec8f8 0%,#86A8E7 50%, #7070cf 100%);
+  color: white;
 }
 
 #yet {

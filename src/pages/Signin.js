@@ -108,7 +108,7 @@ export default class Signin extends React.Component {
                         </label>
                         <div className="signupButtons">
                             <button id="Login" type="submit">로그인</button>
-                            <button id="OauthGoogle" onClick={() => { window.location.replace('http://localhost:5000/auth/google') }}>Sign in with Google</button>
+                            <button id="OauthGoogle" type="button" onClick={() => { window.location.replace('http://localhost:5000/auth/google') }}>Sign in with Google</button>
                         </div>
                         <div id="GoToSignup" onClick={this.hasAccountHandler}>Create a new account</div> {/* /signup 으로 이동하는 Redirect를 구현했습니다*/}
                     </form>

@@ -637,13 +637,14 @@ ul {
 }
 #shareForm-main {
 float: right;
- width : 250px;
+ width : 200px;
+ margin-right: 50px;
 }
 /* ============================ 조성민 추가분 ==========================*/
 #shareForm-main input{
   box-sizing: border-box;
   float : left;
-  width : 180px;
+  width : 150px;
 }
 
 #shareForm-main button{
@@ -651,18 +652,13 @@ float: right;
   margin-top : 0px;
   margin-right : 5px;
   float : right;
-  width : 50px;
+  width : 30px;
+  height: 30px;
 }
 
 .addForm.editEntry {
   padding-top: 20px;
-}
-#searchFriendList {
-  width : 100px;
-  min-height : 30px;
-  height: fit-content;
-  z-index: 1;
-  float: right;
+  margin-right: 50px;
 }
 #shareTo {
   padding-top : 10px;
@@ -672,7 +668,7 @@ float: right;
   float: right;
   background-color: #E3EDF7;
   margin-top: 30px;
-  width : 250px;
+  width : 200px;
   height : 250px;
   box-shadow: inset -5.86034px -5.86034px 19.5345px rgba(249, 251, 253, 0.371), inset 3.9069px 3.9069px 3.9069px rgba(0, 0, 0, 0.18);
 }
@@ -685,7 +681,7 @@ float: right;
   background-position: center;
   background-repeat: no-repeat;
   float: left;
-  margin: 5px;
+  margin: 5px;  
 }
 #shareButton-main-Active{ /* share 상태 on */
   border-radius: 100%;
@@ -701,10 +697,16 @@ float: right;
 }
 
 .searchFriendEntry {
-  width : 200px;
+  width : 150px;
   float: left;
   margin : 10px auto;
-  font-size : 20px;
+  font-size : 18px;
+}
+
+.searchFriendEntry button{
+ width : 20px !important;
+ height: 20px !important;
+ border-radius: 30%;
 }
 
 .toLeft {
@@ -712,6 +714,7 @@ float: right;
   margin-left: 50px;
   margin-right :0
 }
+
 #removeToShare {
   margin : 0 ;
   width : 25px;

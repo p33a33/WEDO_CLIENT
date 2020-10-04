@@ -97,7 +97,7 @@ class Main extends React.Component {
         if (isFound) {
             return;
         } else {
-            return alert("이런 친구가 있었던가요?")
+            return alert("친구 이름을 다시 확인해주세요.")
         }
     }
 

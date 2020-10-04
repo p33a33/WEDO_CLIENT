@@ -15,6 +15,7 @@ class Main extends React.Component {
             isDeleted: false,
             title: "",
             body: "",
+            followinfo: [],
             currentTime: { hour: null, minutes: null },
             current: null,
             currentWeatherIcon: null,
@@ -29,8 +30,9 @@ class Main extends React.Component {
         this.resetForm = this.resetForm.bind(this)
         this.getTime = this.getTime.bind(this)
         this.getWeather = this.getWeather.bind(this)
-        this.handleSearchFriend = this.handleSearchFriend.bind(this)
         this.handleIsShareOpen = this.handleIsShareOpen.bind(this)
+        this.handleEditedData = this.handleEditedData.bind(this)
+        this.handleFetchTodo = this.handleFetchTodo.bind(this)
         this.handleAddShareTo = this.handleAddShareTo.bind(this)
         this.handleRemoveShareTo = this.handleRemoveShareTo.bind(this)
     }
@@ -39,35 +41,12 @@ class Main extends React.Component {
         setInterval(this.getTime, 1000)
 
         axios.get(`http://localhost:5000/main`)
-            .then(res => this.props.handleFetchTodo(res.data))
-    }
+            .then(res => {
+                this.setState({ todos: res.data })
+            })
 
-    handleSearchFriend = (e) => { //  Todo Add 시 친구 찾기 input을 통해 친구를 검색합니다.
-        console.log(`나 일 하고있어요`)
-        let keyword = String(e.target.value)
-        if (keyword) {
-            let searchList = this.props.followinfo.reduce(
-                (acc, cur) => {
-                    if (cur.fullname.includes(keyword)) {
-                        acc.push([cur.id, cur.fullname])
-                    }
-                    return acc
-                }, [])
-            console.log(searchList)
-            if (searchList[0]) {
-                this.setState({ searchFriend: searchList })
-            } else {
-                this.setState({ searchFriend: [] })
-            }
-        } else {
-            this.setState({ searchFriend: [] })
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.todos.length !== this.props.todos.length) {
-            this.setState({ todos: this.props.todos })
-        }
+        axios.get(`http://localhost:5000/followlist`)
+            .then(res => this.setState({ followinfo: res.data.friend }))
     }
     getTime() {
         let day = new Date()
@@ -91,24 +70,34 @@ class Main extends React.Component {
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
     };
-
+    handlePublicOnly = () => {
+        this.setState({ publicOnly: !this.state.publicOnly })
+    };
+    handleFetchTodo(data) {
+        this.setState({ todos: data })
+    }
     handleAddShareTo = (e) => {
-        let userid = e.target.getAttribute('userid')
-        let fullname = e.target.innerHTML
-        let temp = this.state.shareTo
-        let isThere = false;
+        let { friendToSearch, shareTo, followinfo } = this.state
+        let temp = shareTo
+        let isFound = false;
 
-        for (let user of temp) {
-            if (user[0] === userid) {
-                isThere = true;
+        for (let follower of shareTo) {
+            if (follower[1] === friendToSearch) {
+                return alert("이미 목록에 있는 친구입니다")
             }
         }
 
-        if (isThere) {
-            alert("이미 추가된 친구입니다")
+        for (let friend of followinfo) {
+            if (friend.full_name === friendToSearch) {
+                temp.push([friend.id, friend.full_name])
+                isFound = true
+            }
+        }
+
+        if (isFound) {
+            return;
         } else {
-            temp.push([userid, fullname])
-            this.setState({ shareTo: temp })
+            return alert("이런 친구가 있었던가요?")
         }
     }
 
@@ -129,20 +118,34 @@ class Main extends React.Component {
         }
         this.setState({ shareTo: temp })
     }
-
+    handleEditedData(record) {
+        let temp = this.state.todos
+        console.log(record)
+        for (let i = 0; i < temp.length; i++) {
+            if (record.id === temp[i].id) {
+                temp[i] = record
+            }
+        }
+        console.log(temp)
+        this.setState({ todos: temp })
+    }
     // render에 직접 적용된 함수를 메소드로 정리했습니다.
     handleAdd = () => {
         const { title, body, shareTo } = this.state
         if (title && body) {
             axios.post("http://localhost:5000/todowrite", { title, body })
-                .then(res => { this.props.handleAddTodo(res.data); return res.data })
-                .then(data => {
+                .then(res => {
                     if (shareTo.length > 0) {
                         for (let user of shareTo) {
-                            axios.post("http://localhost:5000/sharetodo", { todoid: data.id, friendid: Number(user[0]) })
-                                .then(res => console.log(res))
-                                .catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) })
+                            axios.post("http://localhost:5000/sharetodo", { todoid: res.data.id, friendid: Number(user[0]) })
+                                .then(res => {
+                                    axios.get(`http://localhost:5000/main`)
+                                        .then(newlist => this.setState({ todos: newlist.data }))
+                                }).catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) })
                         }
+                    } else {
+                        axios.get(`http://localhost:5000/main`)
+                            .then(newlist => this.setState({ todos: newlist.data }))
                     }
                 })
                 .then(() => this.handleAddOpen())
@@ -157,10 +160,10 @@ class Main extends React.Component {
     }
 
     getProgress = () => {
-        let alltodos = this.props.todos.length
+        let alltodos = this.state.todos.length
         let counter = 0;
 
-        for (let todo of this.props.todos) {
+        for (let todo of this.state.todos) {
             if (todo.isclear) {
                 counter = counter + 1
             }
@@ -185,8 +188,8 @@ class Main extends React.Component {
             })
     }
     render() {
-        let { isAddOpen, currentWeatherIcon, currentTemp, isShareOpen, searchFriend, shareTo } = this.state
-        let { todos, handleEditedData, handleFetchTodo } = this.props
+        let { todos, isAddOpen, currentWeatherIcon, currentTemp, isShareOpen, shareTo, publicOnly, followinfo } = this.state
+
         return (
             <div>
                 <div className="pagebox">
@@ -227,7 +230,7 @@ class Main extends React.Component {
                         </div>
                         <div className="addButtons-main">
                             <button className="addButton" onClick={this.handleAddOpen} style={{ display: isAddOpen ? "none" : "block" }}>추가하기</button>
-                            <button className="addButton" style={{ display: isAddOpen ? "none" : "block" }}>공유중인 Todo</button>
+                            <button className="addButton" onClick={this.handlePublicOnly} style={{ display: isAddOpen ? "none" : "block" }}>{publicOnly ? "모든 Todo" : "공유중인 Todo"}</button>
                         </div> {/*  Add가 열리면 Add 버튼을 숨깁니다. */} {/* TodoEntry가 렌더되는 부분입니다*/}
                         <div className="add-todo" style={{ display: isAddOpen ? "block" : "none" }}> {/*  isAddOpened를 확인하여 렌더합니다. */}
                             <form className={isShareOpen ? "addForm toLeft" : "addForm"} onSubmit={(e) => { e.preventDefault(); this.handleAdd(); this.resetForm(); }} >
@@ -240,14 +243,8 @@ class Main extends React.Component {
                                 </span>
                             </form>
                             <div className="addForm" id="shareForm-main" style={{ display: isShareOpen ? "" : "none" }}>
-                                <input placeholder="친구이름입력" onChange={(e) => this.handleSearchFriend(e)}></input>  {/*친구 이름 검색창*/}
-                                <div id="searchFriendList" style={{ display: searchFriend.length > 0 ? "" : "none" }}>   {/* 검색 결과 표시  */}
-                                    {searchFriend.length > 0 ?
-                                        searchFriend.map(val =>
-                                            <button key={val[0]} userid={val[0]} onClick={(e) => this.handleAddShareTo(e)}>
-                                                {val[1]}
-                                            </button>) : ''}
-                                </div>
+                                <input className="searchInput" placeholder="친구이름입력" onChange={this.handleInputValue("friendToSearch")}></input>  {/*친구 이름 검색창*/}
+                                <button onClick={this.handleAddShareTo} />
                                 <div id="shareTo">
                                     {shareTo.map(friend =>
                                         <div key={friend[0]}>
@@ -259,17 +256,18 @@ class Main extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <Motion
-                            defaultStyle={{ x: -200, opacity: 0 }}
-                            style={{ x: spring(0), opacity: spring(1) }} >
-                            {(style) => (<div style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }}>
-                                {todos.map(todo =>
-                                    <TodoEntry
-                                        key={todo.id}
-                                        todo={todo}
-                                        handleInputValue={this.handleInputValue}
-                                        handleFetchTodo={handleFetchTodo}
-                                        handleEditedData={handleEditedData} />)}</div>)}
+                        <Motion defaultStyle={{ x: -200, opacity: 0 }} style={{ x: spring(0), opacity: spring(1) }} >
+                            {(style) => (
+                                <div style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }}>
+                                    {todos.map(todo =>
+                                        <TodoEntry
+                                            publicOnly={publicOnly}
+                                            key={todo.id}
+                                            todo={todo}
+                                            followinfo={followinfo}
+                                            handleInputValue={this.handleInputValue}
+                                            handleFetchTodo={this.handleFetchTodo}
+                                            handleEditedData={this.handleEditedData} />)}</div>)}
                         </Motion>
                     </div>
                 </div>

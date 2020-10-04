@@ -90,7 +90,7 @@ export default class Signin extends React.Component {
                         <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
                             <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`} className="weatherImage" />
                             <div className="currentTemp">
-                                서울<p><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b></p>
+                                서울<br></br><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b>
                             </div>
                         </div>
                     </div>

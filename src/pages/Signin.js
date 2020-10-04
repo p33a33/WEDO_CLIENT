@@ -94,7 +94,7 @@ export default class Signin extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div id="logo"><h1></h1></div>
+                    <div id="logo"></div>
                     <form className="Form Signin" method="POST" action="http://localhost:5000/signin" > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
                         <label>
                             <div className="signInput">

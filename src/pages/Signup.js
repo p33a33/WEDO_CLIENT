@@ -64,7 +64,7 @@ export default class Signup extends React.Component {
             return (
                 <div className="pagebox">
                     <div className="headerText">Sign Up</div>
-                    <div id="SignupPage">
+                    <div className="edit-nickname" style={{ height: "900px" }}>
                         <form className="Form Signup" onSubmit={(e) => { e.preventDefault(); this.submitHandler(); }}> {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
                             <div style={{ marginBottom: '50px' }}>
                                 <div>이메일

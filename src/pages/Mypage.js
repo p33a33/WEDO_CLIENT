@@ -25,7 +25,7 @@ class Mypage extends React.Component {
                 <button id='gotomypage' onClick={() => { this.props.history.push('/main') }}>Todo List</button>
             </div>
             <div className="edit-user">
-                <h1>개인정보변경</h1>
+                <div className="headerText">개인정보변경</div>
                 <div className="edit-nickname">
                     <form className="Form ChangeNickname"
                         onSubmit={(e) => {
@@ -42,9 +42,9 @@ class Mypage extends React.Component {
                                     console.log(err);
                                 });
                         }}>
-                        <h2>닉네임 변경</h2>
+                        <div className="headerText">닉네임 변경</div>
                         <input type="nickname" placeholder="변경할 닉네임" onChange={this.handleInputValue("nickname")}></input>
-                        <button type="submit">변경</button>
+                        <button className="addButton" type="submit">변경</button>
                     </form>
                 </div>
                 <div className="edit-password">
@@ -71,17 +71,17 @@ class Mypage extends React.Component {
                             }
                         }}>
 
-                        <h2>비밀번호 변경</h2>
+                        <div className="headerText">비밀번호 변경</div>
                         <input type="password" placeholder="현재 비밀번호" onChange={this.handleInputValue("oldPassword")}></input>
                         <div><input type="password" placeholder="새 비밀번호" onChange={this.handleInputValue("newPassword")}></input></div>
                         <div><input type="password" placeholder="새 비밀번호 확인" onChange={this.handleInputValue("checkNewPassword")}></input></div>{/* 현재 비밀번호 ~ 새 비밀번호 확인의 type을 password로 수정했습니다. */}
 
 
-                        <button type="submit">비밀번호 변경</button>
+                        <button className="addButton" type="submit">비밀번호 변경</button>
                     </form>
 
                 </div>
-                <button id="xkfxhl"> 회원 탈퇴 </button>
+                <button className="addButton"> 회원 탈퇴 </button>
 
             </div>
         </div>

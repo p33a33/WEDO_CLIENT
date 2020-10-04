@@ -47,9 +47,9 @@ color: black;
 }
 .Signin {
   position: relative;
-  margin : 50px auto 0px auto;
-width: 350px;
-height: 600px;
+  margin : 100px auto 0px auto;
+  width: 350px;
+  height: 600px;
 }
 .Form{
   align-items: center;
@@ -106,12 +106,28 @@ button:active {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+.edit-user .headerText{
+  padding-top: 60px;
+}
+.edit-nickname .headerText{
+  padding: 10px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 30px; 
+}
+.edit-password .headerText{
+  padding: 10px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 30px;  
+}
 .Signup{
   width : 350px;
   height: 100vh;
-  margin : 10% auto;
-  background : linear-gradient(45deg,  #FC5C7D 0%, #6A82FB 100%);
+  margin : 25px auto;
+  background : linear-gradient(45deg,  #FC5C7D 0%, #6a82fb 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
@@ -130,6 +146,10 @@ width : 350px;
   margin-left : auto;
   margin-bottom : 15px
   }
+.signInput input{
+  -webkit-text-fill-color: #555b77;
+}
+
 .pagebox h1{
   text-align: center;
 }
@@ -433,7 +453,7 @@ width : 350px;
 }
 #OauthGoogle {
   font-weight: 800;
-  margin-top: 110px;
+  margin-top: 170px;
   background-image: url(../src/images/google.png);
   background-repeat: no-repeat;
   background-size: 28px;
@@ -450,7 +470,7 @@ width : 350px;
   margin-right: 20px;
 }
 #xkfxhl{
-  margin-top:100px;
+  margin-top:60px;
   width : 350px;
   height : 50px;
 }
@@ -607,11 +627,13 @@ ul {
 }
 
 #logo{
-  color:gray;
-  background-image: url(../src/images/tmp_logo.png);
+  height: 200px;
+  margin: 0px auto;
+  margin-top: 80px;
+  background-image: url(../src/images/logo.png);
+  background-size: 300px;
   background-position: center;
   background-repeat: no-repeat;
-  height: 280px;
 }
 #shareForm-main {
   float : right;
@@ -720,4 +742,9 @@ ul {
   width: 150px;
   margin-left : 82%;
   align-items: right;
+}
+.edit-user .addButton{
+  float: none;
+  margin: 0 auto;
+  margin-top: 60px;
 }

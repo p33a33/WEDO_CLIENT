@@ -40,7 +40,7 @@ class FollowList extends React.Component {
             .then(res => {
                 console.log(res)
                 axios.get('http://localhost:5000/followlist')
-                    .then(res => this.handleNewFollowList(res.data.friend))
+                    .then(data => this.handleNewFollowList(data.data.friend))
             })
     }
 

@@ -130,6 +130,10 @@ width : 350px;
   margin-left : auto;
   margin-bottom : 15px
   }
+  .signInput input{
+    -webkit-text-fill-color: black;
+
+  }
 .pagebox h1{
   text-align: center;
 }
@@ -681,7 +685,7 @@ ul {
 }
 
 .toLeft {
-  float: left;
+  left : 0;
   margin-left: 50px;
 }
 

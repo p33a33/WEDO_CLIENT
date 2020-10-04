@@ -18,7 +18,7 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ title: 123, body: 1234, isClear: false }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }, { title: 234, body: 2345, isClear: true }],
+      todos: [],
       followinfo: [
         // { id: 1, user_id: 2, follow_id: 3, fullname: '친구', created_at: 2020 - 9 - 29 },
         // { id: 2, user_id: 3, follow_id: 3, fullname: '친구2', created_at: 2020 - 9 - 29 },

@@ -12,7 +12,10 @@ class TodoEntry extends React.Component {
             title: props.todo.title,
             body: props.todo.body,
             id: props.todo.id,
-            isclear: false
+            isclear: false,
+            isShareOpen: false,
+            friendToSearch: '',
+            shareTo: []
         }
         this.handleInputValue = this.handleInputValue.bind(this)
         this.handleClear = this.handleClear.bind(this)
@@ -20,6 +23,13 @@ class TodoEntry extends React.Component {
         this.handleModify = this.handleModify.bind(this)
         this.handleModifyOpen = this.handleModifyOpen.bind(this)
         this.handleClickTitle = this.handleClickTitle.bind(this)
+        this.handleShareOpen = this.handleShareOpen.bind(this)
+    }
+
+    componentDidMount() {
+        let sharingList = this.props.todo.users.map(users => [users.id, users.full_name])
+
+        this.setState({ shareTo: sharingList })
     }
     handleInputValue = (key) => (e) => {
         this.setState({ [key]: e.target.value });
@@ -46,6 +56,9 @@ class TodoEntry extends React.Component {
     handleClearforClient() {
         this.setState({ isclear: !this.state.isclear })
     }
+    handleShareOpen() {
+        this.setState({ isShareOpen: !this.state.isShareOpen })
+    }
     handleModify = () => {
         let { title, body, id } = this.state
         let data = { title: title, body: body, id: id }
@@ -62,24 +75,43 @@ class TodoEntry extends React.Component {
         }
     }
     render() {
-        let { title, body, isclear, id } = this.props.todo;
-        let { isModifyOpened, isTitleClicked } = this.state
+        let { title, body, isclear, users } = this.props.todo;
+        let { publicOnly } = this.props;
+        let { isModifyOpened, isTitleClicked, isShareOpen, friendToSearch, shareTo } = this.state
         return (
-            <div>
-                <form className="addForm" onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
+            <div >
+                <form className={isShareOpen ? "addForm toLeft" : "addForm"} onSubmit={(e) => { e.preventDefault(); this.handleModify(); }} style={{ display: isModifyOpened ? "block" : "none" }}>
                     <input style={{ marginTop: '20px' }} defaultValue={title} onChange={this.handleInputValue("title")} />
                     <textarea defaultValue={body} onChange={this.handleInputValue("body")} />
                     <span className="editFormButtons">
                         <button type="button" className="deleteButton" onClick={this.handleDelete}></button>
                         <button type="submit" className="editOkay"></button>
                         <button type="button" className="cancelButton" onClick={this.handleModifyOpen}></button>
+                        <button type="button" className="shareButton" onClick={this.handleShareOpen}></button>
                     </span>
                 </form>
-                <ul className="todo-entry" style={{ display: isModifyOpened ? "none" : "block" }}>
+                <div className="addForm" id="shareForm-main" style={{ display: isShareOpen ? "" : "none" }}>
+                    <input placeholder="친구이름입력" onChange={this.handleInputValue("friendToSearch")}></input>  {/*친구 이름 검색창*/}
+                    <button onClick={this.handleAddShareTo} />
+                    <div id="shareTo">
+                        {shareTo.map(friend =>
+                            <div key={friend[0]}>
+                                <div className="searchFriendEntry" >
+                                    {friend[1]}
+                                    <button userid={friend[0]} id="removeToShare" onClick={(e) => this.handleRemoveShareTo(e)} />
+                                </div>
+                            </div>)}
+                    </div>
+                </div>
+                <ul className="todo-entry" style={{
+                    display: isModifyOpened || publicOnly ?
+                        publicOnly && !isModifyOpened ?
+                            users.length > 0 ? "block" : "none" : "none" : "block"
+                }}>
                     <div className="todo-title">
                         <span className="editFormButtons">
-                            <button id={isclear ? "done" : "yet"} onClick={() => { this.handleClear() }}></button>
-                            <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen}></button>
+                            <button id={isclear ? "done" : "yet"} onClick={this.handleClear} />
+                            <button className="itm-modify-btn" style={{ display: isTitleClicked ? 'block' : 'none' }} onClick={this.handleModifyOpen} />
                         </span>
                         <h2 style={{ textDecorationLine: isclear ? 'line-through' : '' }} onClick={this.handleClickTitle}>{title}</h2>
                         {isTitleClicked ?

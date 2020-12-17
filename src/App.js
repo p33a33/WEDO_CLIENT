@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
+import './App-1.css';
 import { BrowserRouter, Route, Switch, useHistory, Redirect } from "react-router-dom";
 
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Main from "./pages/Main";
 import Mypage from "./pages/Mypage"
+import FollowList from "./pages/FollowList"
 import axios from "axios"
+import { render } from 'react-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -16,50 +18,44 @@ class App extends React.Component {
     this.state = {
       isSignin: false,
       userinfo: {},
-      todos: [{ id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }, { id: 1, title: "운동하기", body: "요가", isClear: 0 }] // 더미데이터가 추가되어 있습니다.
+      followinfo: [],
     };
-    this.handleisSigninChange = this.handleisSigninChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.passwordValidationCheck = this.passwordValidationCheck.bind(this)
-    this.handleEditedData = this.handleEditedData.bind(this)
-    this.handleFetchTodo = this.handleFetchTodo.bind(this)
-    this.handleAddTodo = this.handleAddTodo.bind(this)
+    this.getFriendsList = this.getFriendsList.bind(this)
+    this.addNewFriend = this.addNewFriend.bind(this)
+    this.handleSignin = this.handleSignin.bind(this)
+    this.handleGetUserinfo = this.handleGetUserinfo.bind(this)
   }
-
-  handleisSigninChange() {
-    this.setState({ isSignin: true });
-    axios.all([axios.get("http://localhost:5000/mypage"), axios.get("http://localhost:5000/main")]) // userinfo를 가져오는 url주소를 API문서와 일치시켰습니다 (signin => mypage)
-      .then(axios.spread((userData, todoData) => {
-        this.setState({ userinfo: userData.data, todos: todoData.data });
-      }))
-  }
-  handleEditedData(record) {
-    let temp = this.state.todos
-    console.log(record)
-    for (let i = 0; i < temp.length; i++) {
-      if (record.id === temp[i].id) {
-        temp[i] = record
-      }
-    }
-    console.log(temp)
-    this.setState({ todos: temp })
-  }
-  handleFetchTodo(data) {
-    this.setState({ todos: data })
-  }
-  handleAddTodo(data) {
-    let temp = this.state.todos
-    temp.push(data)
-
-    this.setState({
-      todos: temp
-    })
+  getFriendsList() {
+    axios.get("http://localhost:5000/followlist")
+      .then(res => {
+        let followlist = res.data
+        this.setState({ followinfo: followlist })
+      })
+      .catch(e => console.log(e))
   }
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
       .post("http://localhost:5000/signout")
       .catch(e => console.log(e))
+  }
+
+  handleGetUserinfo(data) {
+    this.setState({ userinfo: data })
+  }
+
+  handleSignin() {
+    this.setState({ isSignin: true })
+  }
+
+  addNewFriend = (user) => {
+    let temp = this.state.followinfo
+    temp.push(user)
+    this.setState({
+      followinfo: temp
+    })
   }
 
   passwordValidationCheck = (pw) => { // signup과 mypage에서 공통적으로 사용되는 method이기 때문에, app에서 props로 내려주도록 했습니다.
@@ -93,7 +89,7 @@ class App extends React.Component {
               render={() => (
                 <Signin
                   isSignin={isSignin}
-                  handleisSigninChange={this.handleisSigninChange}
+                  handleSignin={this.handleSignin}
                   history={useHistory}
                 />
               )}
@@ -106,12 +102,17 @@ class App extends React.Component {
             <Route
               exact
               path="/mypage"
-              render={() => <Mypage isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} history={useHistory} pwCheck={this.passwordValidationCheck} />}
+              render={() => <Mypage isSignin={isSignin} handleSignout={this.handleSignout} userinfo={userinfo} history={useHistory} pwCheck={this.passwordValidationCheck} />}
             />
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} todos={todos} handleEditedData={this.handleEditedData} handleFetchTodo={this.handleFetchTodo} handleAddTodo={this.handleAddTodo} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleGetUserinfo={this.handleGetUserinfo} />}
+            />
+            <Route
+              exact
+              path="/followlist"
+              render={() => <FollowList userinfo={userinfo} isSignin={isSignin} addNewFriend={this.addNewFriend} handleSignout={this.handleSignout} history={useHistory} />}
             />
             <Route
               path="/"

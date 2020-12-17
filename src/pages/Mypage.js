@@ -50,8 +50,11 @@ class Mypage extends React.Component {
                 <div className="edit-password">
                     <form className="Form ChangePassword"
                         onSubmit={(e) => {
-                            //현재 비밀번호 검사는 아직 구현전입니다. 
                             e.preventDefault();
+                            if (this.props.userinfo.email === "guest@guest.com") {
+                                return alert("게스트는 비밀번호를 변경할 수 없습니다.")
+                            }
+
                             if (this.state.newPassword !== this.state.checkNewPassword) {
                                 alert("비밀번호 입력을 다시 확인해주세요.")
                             }

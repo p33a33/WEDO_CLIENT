@@ -6,6 +6,8 @@ import TodoEntry from "./TodoEntry"
 import { Motion, spring } from "react-motion"
 import { Circle, Line } from "rc-progress"
 
+axios.defaults.withCredentials = true;
+
 class Main extends React.Component {
     constructor() {
         super()
@@ -47,6 +49,7 @@ class Main extends React.Component {
                 this.setState({
                     todos: todos.data, followinfo: followlist.data.friend, userinfo: userinfo.data
                 })
+                this.props.handleGetUserinfo(userinfo.data)
             })
             )
     }
@@ -165,10 +168,19 @@ class Main extends React.Component {
     getProgress = () => {
         let alltodos = this.state.todos.length
         let counter = 0;
-
         for (let todo of this.state.todos) {
-            if (todo.isclear) {
-                counter = counter + 1
+            if (todo.user_id === this.state.userinfo.id) {
+                if (todo.isclear) {
+                    counter++
+                }
+            } else {
+                for (let user of todo.users) {
+                    if (user.id === this.state.userinfo.id) {
+                        if (user.todo_user.isclear) {
+                            counter++
+                        }
+                    }
+                }
             }
         }
         return { todos: alltodos, clear: counter, progress: (counter / alltodos * 100) }
@@ -201,7 +213,7 @@ class Main extends React.Component {
                         <button id='edit-logout' onClick={() => { this.props.handleSignout(); this.props.history.push('/') }}>로그아웃</button>
                         <button id='gotomypage' onClick={() => { this.props.history.push('/mypage') }}>Mypage</button>
                         <button id='followlist' onClick={() => { this.props.history.push('/followlist') }}>친구목록</button>
-                        <div className={this.state.current === "day" ? "Text weatherInfo-day" : "Text weatherInfo-night"} >
+                        <div className={this.state.current === "evening" ? "Text weatherInfo-night" : "Text weatherInfo-day"} >
                             <img src={`http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`} className="weatherImage" />
                             <div className="currentTemp">
                                 서울<br></br><b style={{ fontWeight: "bolder" }}>{currentTemp} 도</b>
@@ -216,7 +228,7 @@ class Main extends React.Component {
                         style={{ opacity: spring(1) }}>
                         {(style) => (<div style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }} className="Text Sayhi" >
                             <div>
-                                {this.state.current === "" ? <div /> : this.state.current = "morning" ? <div> 안녕하세요! <br></br> 좋은 아침이에요.</div>
+                                {this.state.current === "" ? <div /> : this.state.current = "morning" ? <div> 안녕하세요 {this.state.userinfo.nickname}님!<br></br> 좋은 아침이에요.</div>
                                     : this.state.current === "afternoon" ? <div> 피곤하시죠? <br></br>
                                         <a href="https://www.google.com/search?source=hp&ei=AL5yX4fHF4i2mAWf75vACA&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&oq=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&gs_lcp=CgZwc3ktYWIQAzIFCAAQsQMyBQgAELEDMgUIABCxAzICCAAyBQgAELEDMgIIADICCAAyAggAMgIIADICCAA6CAgAELEDEIMBOgQIABAKUPACWO8VYJ8XaAhwAHgDgAFviAHoCZIBBDAuMTKYAQCgAQGqAQdnd3Mtd2l6sAEA&sclient=psy-ab&ved=0ahUKEwiHx8WdyY3sAhUIG6YKHZ_3BogQ4dUDCAc&uact=5">
                                             커피 한 잔 어때요?</a></div>

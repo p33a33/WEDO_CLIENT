@@ -392,7 +392,7 @@ width : 350px;
   text-shadow:-0.5px 0.5px 2px #868686bc, 1.5px 1.5px 1.5px #808080e7;
 }
 .weatherImage {
-  margin-left: -7px;
+  margin-left: -9px;
   margin-top : -10px;
   width : 120px;
   height : 120px;
@@ -486,7 +486,6 @@ width : 350px;
 }
 #OauthGoogle {
   font-weight: 800;
-  margin-top: 170px;
   background-image: url(../src/images/google.png);
   background-repeat: no-repeat;
   background-size: 28px;
@@ -797,4 +796,10 @@ float: right;
 .searchInput {
   margin-top: 0;
   width : 100px;
+}
+.signupButtons {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }

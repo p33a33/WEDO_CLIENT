@@ -24,6 +24,8 @@ class App extends React.Component {
     this.passwordValidationCheck = this.passwordValidationCheck.bind(this)
     this.getFriendsList = this.getFriendsList.bind(this)
     this.addNewFriend = this.addNewFriend.bind(this)
+    this.handleSignin = this.handleSignin.bind(this)
+    this.handleGetUserinfo = this.handleGetUserinfo.bind(this)
   }
   getFriendsList() {
     axios.get("http://localhost:5000/followlist")
@@ -33,12 +35,19 @@ class App extends React.Component {
       })
       .catch(e => console.log(e))
   }
-
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
       .post("http://localhost:5000/signout")
       .catch(e => console.log(e))
+  }
+
+  handleGetUserinfo(data) {
+    this.setState({ userinfo: data })
+  }
+
+  handleSignin() {
+    this.setState({ isSignin: true })
   }
 
   addNewFriend = (user) => {
@@ -69,7 +78,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isSignin, userinfo, todos, followinfo } = this.state;
+    const { isSignin, userinfo, todos } = this.state;
     console.log(isSignin, userinfo);
     return (
       <div>
@@ -80,7 +89,7 @@ class App extends React.Component {
               render={() => (
                 <Signin
                   isSignin={isSignin}
-                  handleisSigninChange={this.handleisSigninChange}
+                  handleSignin={this.handleSignin}
                   history={useHistory}
                 />
               )}
@@ -98,7 +107,7 @@ class App extends React.Component {
             <Route
               exact
               path="/main"
-              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} />}
+              render={() => <Main isSignin={isSignin} userinfo={userinfo} handleSignout={this.handleSignout} todos={todos} handleGetUserinfo={this.handleGetUserinfo} />}
             />
             <Route
               exact

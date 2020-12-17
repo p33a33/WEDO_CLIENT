@@ -32,11 +32,11 @@ class TodoEntry extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.todo.users)
-        let sharingList = this.props.todo.users.map(users => [users.id, users.full_name])
-
-        this.setState({ shareTo: sharingList })
+        console.log('props, todo.users', this.props.todo.users)
         this.checkUsersClear();
+        let sharingList = this.props.todo.users.map(users => [users.id, users.full_name])
+        this.setState({ shareTo: sharingList })
+
 
     }
     handleIsShareOpen = () => {
@@ -156,11 +156,14 @@ class TodoEntry extends React.Component {
         } else {
             axios.post('http://localhost:5000/friendinfo', { id: user_id })
                 .then(res => {
-                    let result = users.map(user => {
-                        if (user.id !== userinfo) {
-                            return [user.full_name, user.todo_user.isclear]
+                    let result = []
+
+                    users.reduce((acc, cur) => {
+                        if (cur.id !== userinfo.id) {
+                            acc = acc.push[cur.id, cur.full_name]
                         }
-                    })
+                    }, result)
+                    console.log(result)
                     result.unshift([res.data.full_name, isclear])
                     this.setState({ shareFriends: result })
                 })
@@ -186,10 +189,13 @@ class TodoEntry extends React.Component {
 
         if (this.state.newShareTo.length > 0) {
             for (let follower of this.state.newShareTo) {
-                axios.post(`http://localhost:5000/shareTodo`, { todoid: this.props.todo.id, friendid: follower[0] })
-                    .then(() => axios.get(`http://localhost:5000/main`)
-                        .then(res2 => this.props.handleFetchTodo(res2.data)))
-
+                axios.all([axios.post(`http://localhost:5000/shareTodo`, { todoid: this.props.todo.id, friendid: follower[0] }), axios.get(`http://localhost:5000/main`)])
+                    .then(axios.spread((res1, res2) => {
+                        this.props.handleFetchTodo(res2.data)
+                        if (!this.state.isModifyOpened) {
+                            this.handleModifyOpen()
+                        }
+                    }))
             }
         }
     }

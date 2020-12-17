@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
+import qs from 'querystring'
 
 axios.defaults.withCredentials = true;
 
@@ -41,7 +42,6 @@ export default class Signin extends React.Component {
             hasAccount: false
         })
     }
-
     getWeather() { // 일단 서울 날씨를 Signin 페이지에 표기합니다.
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&units=metric&lang=kr&appid=${process.env.REACT_APP_WEATHER_API_KEY}`, { // REACT에서 활용할 환경변수는 앞에 REACT_APP_ 이 붙어있어야 한다.
             withCredentials: false
@@ -68,6 +68,42 @@ export default class Signin extends React.Component {
         }
         this.setState({ currentTime: time })
     }
+    submitHandler = () => {
+        let { email, password } = this.state
+
+        if (email && password) {
+            axios({
+                method: "post",
+                data: qs.stringify({ email, password }),
+                url: "http://localhost:5000/signin",
+            })
+                .then(res => {
+                    console.log(res)
+                    if (res.status === 200) {
+                        console.log(this.props.handleSignin())
+                    } else {
+                        return alert("이메일이나 비밀번호를 다시 확인해주세요") // 왜 작동 안하져?
+                    }
+                })
+        } else {
+            alert("이메일, 비밀번호를 반드시 입력해야합니다")
+        }
+    }
+
+    guestHandler = () => {
+        axios({
+            method: "post",
+            data: qs.stringify({ email: "guest@guest.com", password: "!Q@W#E$R1234" }),
+            url: "http://localhost:5000/signin",
+        })
+            .then(res => {
+                console.log(res)
+                if (res.status === 200) {
+                    console.log(this.props.handleSignin())
+                }
+            })
+    }
+
     render() {
         let { currentTemp, currentWeatherIcon } = this.state
 
@@ -95,7 +131,7 @@ export default class Signin extends React.Component {
                         </div>
                     </div>
                     <div id="logo"></div>
-                    <form className="Form Signin" method="POST" action="http://localhost:5000/signin" > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
+                    <form className="Form Signin" onSubmit={(e) => { e.preventDefault(); this.submitHandler() }} > {/*HTML5 유효성검사를 사용하기 위해 form형식을 사용했으나, 실제로 데이터 전송은 axios를 사용했습니다.*/}
                         <label>
                             <div className="signInput">
                                 <input onChange={this.valueChange("email")} name="email" type="email" placeholder="이메일을 입력해주세요" />
@@ -108,6 +144,7 @@ export default class Signin extends React.Component {
                         </label>
                         <div className="signupButtons">
                             <button id="Login" type="submit">로그인</button>
+                            <button id="Nosign" type="button" onClick={this.guestHandler}>비회원으로 체험하기</button>
                             <button id="OauthGoogle" type="button" onClick={() => { window.location.replace('http://localhost:5000/auth/google') }}>Sign in with Google</button>
                         </div>
                         <div id="GoToSignup" onClick={this.hasAccountHandler}>Create a new account</div> {/* /signup 으로 이동하는 Redirect를 구현했습니다*/}

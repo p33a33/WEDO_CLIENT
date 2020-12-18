@@ -28,7 +28,7 @@ class App extends React.Component {
     this.handleGetUserinfo = this.handleGetUserinfo.bind(this)
   }
   getFriendsList() {
-    axios.get("http://localhost:5000/followlist")
+    axios.get("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followlist")
       .then(res => {
         let followlist = res.data
         this.setState({ followinfo: followlist })
@@ -38,7 +38,7 @@ class App extends React.Component {
   handleSignout() {
     this.setState({ isSignin: false, userinfo: {}, todos: [] });
     axios
-      .post("http://localhost:5000/signout")
+      .post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/signout")
       .catch(e => console.log(e))
   }
 

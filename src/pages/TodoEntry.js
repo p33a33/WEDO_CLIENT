@@ -102,21 +102,21 @@ class TodoEntry extends React.Component {
     handleClear = () => {
         let { todo } = this.props
         if (todo.user_id === this.props.userinfo.id) {
-            axios.post("http://localhost:5000/todoclear", { id: todo.id })
-                .then(() => axios.get(`http://localhost:5000/main`)
+            axios.post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/todoclear", { id: todo.id })
+                .then(() => axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                     .then(res2 => this.props.handleFetchTodo(res2.data)))
                 .then(() => this.checkUsersClear())
         } else if (todo.user_id !== this.props.userinfo.id) {
-            axios.post(`http://localhost:5000/shareclear`, { todoid: todo.id })
-                .then(() => axios.get(`http://localhost:5000/main`)
+            axios.post(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/shareclear`, { todoid: todo.id })
+                .then(() => axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                     .then(res2 => this.props.handleFetchTodo(res2.data)))
                 .then(() => this.checkUsersClear())
         }
     }
     handleDelete = () => {
         const data = { id: this.props.todo.id }
-        axios.post("http://localhost:5000/tododelete", data)
-            .then(() => axios.get(`http://localhost:5000/main`)
+        axios.post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/tododelete", data)
+            .then(() => axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                 .then(res2 => this.props.handleFetchTodo(res2.data)))
     }
     checkClear = () => {
@@ -154,7 +154,7 @@ class TodoEntry extends React.Component {
                 return;
             }
         } else {
-            axios.post('http://localhost:5000/friendinfo', { id: user_id })
+            axios.post('http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/friendinfo', { id: user_id })
                 .then(res => {
                     let result = []
 
@@ -178,8 +178,8 @@ class TodoEntry extends React.Component {
         let data = { title: title, body: body, id: id }
 
         if (title && body) {
-            axios.post("http://localhost:5000/todoedit", data)
-                .then(() => axios.get(`http://localhost:5000/main`)
+            axios.post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/todoedit", data)
+                .then(() => axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                     .then(res2 => this.props.handleFetchTodo(res2.data)))
                 .then(this.handleModifyOpen)
         }
@@ -189,7 +189,7 @@ class TodoEntry extends React.Component {
 
         if (this.state.newShareTo.length > 0) {
             for (let follower of this.state.newShareTo) {
-                axios.all([axios.post(`http://localhost:5000/shareTodo`, { todoid: this.props.todo.id, friendid: follower[0] }), axios.get(`http://localhost:5000/main`)])
+                axios.all([axios.post(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/shareTodo`, { todoid: this.props.todo.id, friendid: follower[0] }), axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)])
                     .then(axios.spread((res1, res2) => {
                         this.props.handleFetchTodo(res2.data)
                         if (!this.state.isModifyOpened) {

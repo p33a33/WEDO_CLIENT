@@ -20,7 +20,7 @@ class FollowList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:5000/followlist`)
+        axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followlist`)
             .then(res => {
                 console.log(res)
                 this.setState({ followlist: res.data.friend })
@@ -36,10 +36,10 @@ class FollowList extends React.Component {
     };
 
     handleAddFriend = () => {
-        return axios.post(`http://localhost:5000/followAdd`, { friendemail: this.state.emailToAdd })
+        return axios.post(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followAdd`, { friendemail: this.state.emailToAdd })
             .then(res => {
                 console.log(res)
-                axios.get('http://localhost:5000/followlist')
+                axios.get('http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followlist')
                     .then(res => this.handleNewFollowList(res.data.friend))
             })
     }

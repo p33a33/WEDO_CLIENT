@@ -11,7 +11,7 @@ export default class FollowEntry extends React.Component {
     }
 
     handleUnfollow = () => {
-        axios.post(`http://localhost:5000/followdelete`, { friendid: this.props.follower.id })
+        axios.post(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followdelete`, { friendid: this.props.follower.id })
             .then(res => {
                 let newList = res.data.friend
                 this.props.handleNewFollowList(newList)

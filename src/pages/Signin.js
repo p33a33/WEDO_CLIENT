@@ -73,9 +73,10 @@ export default class Signin extends React.Component {
 
         if (email && password) {
             axios({
-                method: "post",
+                method: "POST",
                 data: qs.stringify({ email, password }),
-                url: "http://localhost:5000/signin",
+                url: "http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/signin",
+                headers: { "content-type": "application/x-www-form-urlencoded" }
             })
                 .then(res => {
                     console.log(res)
@@ -94,13 +95,11 @@ export default class Signin extends React.Component {
         axios({
             method: "post",
             data: qs.stringify({ email: "guest@guest.com", password: "!Q@W#E$R1234" }),
-            url: "http://localhost:5000/signin",
+            url: "http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/signin",
+            headers: { "content-type": "application/x-www-form-urlencoded" }
         })
             .then(res => {
-                console.log(res)
-                if (res.status === 200) {
-                    console.log(this.props.handleSignin())
-                }
+                console.log(this.props.handleSignin())
             })
     }
 
@@ -145,7 +144,7 @@ export default class Signin extends React.Component {
                         <div className="signupButtons">
                             <button id="Login" type="submit">로그인</button>
                             <button id="Nosign" type="button" onClick={this.guestHandler}>비회원으로 체험하기</button>
-                            <button id="OauthGoogle" type="button" onClick={() => { window.location.replace('http://localhost:5000/auth/google') }}>Sign in with Google</button>
+                            <button id="OauthGoogle" type="button" onClick={() => { window.location.replace('http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/auth/google') }}>Sign in with Google</button>
                         </div>
                         <div id="GoToSignup" onClick={this.hasAccountHandler}>Create a new account</div> {/* /signup 으로 이동하는 Redirect를 구현했습니다*/}
                     </form>

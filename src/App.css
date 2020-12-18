@@ -623,9 +623,3 @@ ul {
   margin-left : 82%;
   align-items: right;
 }
-
-.signupButtons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}

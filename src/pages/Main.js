@@ -43,7 +43,11 @@ class Main extends React.Component {
         this.getWeather()
         setInterval(this.getTime, 1000)
 
-        axios.all([axios.get(`http://localhost:5000/main`), axios.get(`http://localhost:5000/followlist`), axios.get(`http://localhost:5000/userinfo`)])
+        axios.all([
+            axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`),
+            axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/followlist`),
+            axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/userinfo`)
+        ])
             .then(axios.spread((todos, followlist, userinfo) => {
                 console.log(todos.data)
                 this.setState({
@@ -139,18 +143,18 @@ class Main extends React.Component {
     handleAdd = () => {
         const { title, body, shareTo } = this.state
         if (title && body) {
-            axios.post("http://localhost:5000/todowrite", { title, body })
+            axios.post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/todowrite", { title, body })
                 .then(res => {
                     if (shareTo.length > 0) {
                         for (let user of shareTo) {
-                            axios.post("http://localhost:5000/sharetodo", { todoid: res.data.id, friendid: Number(user[0]) })
+                            axios.post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/sharetodo", { todoid: res.data.id, friendid: Number(user[0]) })
                                 .then(res => {
-                                    axios.get(`http://localhost:5000/main`)
+                                    axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                                         .then(newlist => this.setState({ todos: newlist.data }))
                                 }).catch(err => { alert("에러가 발생했습니다. 다시 시도해주세요."); console.log(err) })
                         }
                     } else {
-                        axios.get(`http://localhost:5000/main`)
+                        axios.get(`http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/main`)
                             .then(newlist => this.setState({ todos: newlist.data }))
                     }
                 })

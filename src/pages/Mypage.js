@@ -31,7 +31,7 @@ class Mypage extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault();
                             return axios
-                                .post("http://localhost:5000/signeditnickname", {
+                                .post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/signeditnickname", {
                                     nickname: this.state.nickname
                                 })
                                 .then(() => {
@@ -60,7 +60,7 @@ class Mypage extends React.Component {
                             }
                             else {
                                 return axios
-                                    .post("http://localhost:5000/signeditpassword", {
+                                    .post("http://ec2-52-79-239-95.ap-northeast-2.compute.amazonaws.com:5000/signeditpassword", {
                                         newpassword: this.state.newPassword,
                                         oldpassword: this.state.oldPassword
                                     })

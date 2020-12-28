@@ -9,5 +9,4 @@ WEDO는 자기 자신과의 싸움에서 항상 패배하는 쪽에 섰던 팀�
 우리는 이 떠벌림효과에서 영감을 얻어, 내가 할 일을 추가하고, 그 일을 친구에게도 공유할 수 있는 서비스를 만들었습니다.
 
 
-[배포 링크](http://wedoclient.s3-website.ap-northeast-2.amazonaws.com/)
-* 현재 크롬브라우저 세션문제로 해결중에 있습니다.
+[배포 링크](https://wedoclient.tk)
